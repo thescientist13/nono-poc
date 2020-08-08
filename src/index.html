@@ -1,0 +1,55 @@
+<html>
+
+  <head>
+    <title>NoNo POC - Home Page</title>
+  </head>
+
+  <!-- needs a dev server to load script tags -->
+  <!-- <script type="module" src="./components/header.component.js"></script>
+  <script type="module" src="./components/footer.component.js"></script> -->
+  <script>
+    class HeaderComponent extends HTMLElement {
+
+      constructor() {
+        super();
+
+        this.projectName = 'NoNo POC Project';
+        this.root = this.attachShadow({ mode: 'closed' });
+      }
+
+      connectedCallback() {
+        this.render();
+      }
+
+      render() {
+        this.root.innerHTML = `
+          <header>
+            <h1>${this.projectName}</h1>
+          </header>
+        `;
+      }
+    }
+
+    customElements.define('app-header', HeaderComponent);
+  </script>
+
+  <body>
+
+    <section>
+      <app-header></app-header>
+    </section>
+
+    <section>
+      <div class="content">
+        <h1>Hello World from the Home Page!</h1>
+        <a href="./pages/about.html">About Page</a>
+      </div>
+    </section>
+
+    <!-- <section>
+      <app-footer></app-footer>
+    </section> -->
+
+  </body>
+
+</html>
