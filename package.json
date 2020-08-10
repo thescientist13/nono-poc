@@ -1,0 +1,17 @@
+{
+  "name": "nono-poc",
+  "version": "0.1.0",
+  "description": "Dont think it dont say it.",
+  "author": "Owen Buckley <owen@thegreenhouse.io>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thescientist13/nono-poc.git"
+  },
+  "scripts": {
+    "start": "http-server ./src"
+  },
+  "devDependencies": {
+    "http-server": "^0.12.3"
+  }
+}
