@@ -10,7 +10,7 @@
 
 ### Goals
 1. simple dev server w/ `npx http-server src`
-1. External Packages w/ import maps and skypack
+1. External Packages w/ import maps and CDN
   -  A counter w/ LitElement!  :)
 
 ## It's Dangerous to go it along, pt.2, Developer Workflows and going to Production
@@ -33,7 +33,9 @@
  - skypack for development?
  - shim?
 1. Bundling (rollup)
-  - module vs nomodule and differential loading
+  - each `import` is a network request, even with HTTP/2, at scale that may not be sustainable
+    - also, minify and tree shake
+  - module vs nomodule and differential loading?
   - Babel / PostCSS / Browserslits
   - parcel approach (index.html?)
 1. Serialize - browser as a service?

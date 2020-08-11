@@ -1,4 +1,4 @@
-import { LitElement, html } from 'https://unpkg.com/lit-element@2.3.1/lit-element.js?module';
+import { LitElement, html } from 'lit-element';
 
 class MyCounter extends LitElement {
 
