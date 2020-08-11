@@ -11,7 +11,8 @@
 ### Goals
 1. simple dev server w/ `npx http-server src`
 1. External Packages w/ import maps and CDN
-  -  A counter w/ LitElement!  :)
+  - A counter w/ LitElement!  :)
+  - 47 requests though!
 
 ## It's Dangerous to go it along, pt.2, Developer Workflows and going to Production
 "solve for the DX, but DX must always be _platform_ first no matter what.
@@ -56,6 +57,7 @@ The "framework stuff"
 ## Bonus Points
 
 ### Goals
+1. CSS Modules / theming?
 1. SPA
 1. SSR
 1. SFC

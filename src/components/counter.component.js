@@ -31,7 +31,7 @@ class MyCounter extends LitElement {
     const { count } = this;
 
     return html`
-      <div>
+      <div class="container">
         <h1>My Counter</h1>
         
         <p>The current count is: ${count}</p>
