@@ -6,7 +6,7 @@
 1. Couple components
 1. Let's think about the future...
 
-## It's Dangerous to go alone, pt. 1... local development
+## ✅ It's Dangerous to go alone, pt. 1... local development
 
 ### Goals
 1. simple dev server w/ `npx http-server src`
@@ -14,8 +14,34 @@
   - A counter w/ LitElement!  :)
   - 47 requests though!
 
-## It's Dangerous to go it along, pt.2, Developer Workflows and going to Production
+## It's Dangerous to go it along, pt.2, Developer Workflows and Optimizations
 "solve for the DX, but DX must always be _platform_ first no matter what.
+
+### Goals
+1. Robust dev server (koa?) - node v12
+  - ~~Options?~~ - will try it myself :)
+    - es-dev-server
+    - vite
+  - ~~web server (`import` support) / replace **http-server**~~
+  - watch mode / live reload
+1. NPM Packages w/ import maps
+  - skypack or snowpack for development?
+  - shim?
+1. Production optimizations (seperate from serializtion) / Bundling (rollup)
+  - each `import` is a network request, even with HTTP/2, at scale that may not be sustainable
+    - also, minify and tree shake
+  - module vs nomodule and differential loading?
+  - Babel / PostCSS / Browserslits
+  - parcel approach (index.html?)
+
+
+## The Grand Prize
+Now we will make our optimized site
+
+### Goals
+1. Serialize - browser as a service?
+1. <meta> / SEO
+1. IE11 / Polyfills
 
 ### Considerations
 - Over rendering
@@ -23,25 +49,11 @@
 - only bundle code w/ side effects
 - code splitting
 - Use cases
+  - the counter
   - greenwood banner / shelf
   - my blog
   - API calls
 - Inject `<head>`
-
-### Goals
-1. Dev Server (koa)
-1. Package Manager
- - skypack for development?
- - shim?
-1. Bundling (rollup)
-  - each `import` is a network request, even with HTTP/2, at scale that may not be sustainable
-    - also, minify and tree shake
-  - module vs nomodule and differential loading?
-  - Babel / PostCSS / Browserslits
-  - parcel approach (index.html?)
-1. Serialize - browser as a service?
-1. IE11 / Polyfills
-1. <meta>
 
 
 ## Extending the Authoring Experience
@@ -51,32 +63,17 @@ The "framework stuff"
 1. Markdown
 1. GraphQL
 1. Templates w/ LitElement?
-
+1. Evergreen build?
 
 
 ## Bonus Points
 
 ### Goals
+1. serialize during development?  (dev / prod DX parity)
 1. CSS Modules / theming?
 1. SPA
 1. SSR
 1. SFC
 1. custom element registry, replace with `export`?
-
-
-
-
-
-
-The Problems
-1. Dependencies (use import map)
-1. Dedupe content in JS
-1. Only send rendering code?
-1. Large bundles
-1. Over rendering / double load problem?
-1. Limited index.html, hard dependency in webpack infra
-
-
-Oppourtunities
-- SPA vs SSG (Progressive enhancement)
-- HMR
+1. https://github.com/vitejs/vite#features
+1. ES Modules for dev server?

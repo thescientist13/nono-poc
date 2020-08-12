@@ -8,10 +8,12 @@
     "type": "git",
     "url": "git+https://github.com/thescientist13/nono-poc.git"
   },
+  "main": "./server/index.js",
   "scripts": {
-    "start": "http-server ./src"
+    "start": "node ."
   },
-  "devDependencies": {
-    "http-server": "^0.12.3"
-  }
+  "dependencies": {
+    "koa": "^2.13.0"
+  },
+  "devDependencies": {}
 }
