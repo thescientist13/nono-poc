@@ -6,7 +6,7 @@
 1. Couple components
 1. Let's think about the future...
 
-## ✅ It's Dangerous to go alone, pt. 1... local development
+## ✅ It's Dangerous to go alone, pt. 1... Local Development Workflows
 
 ### Goals
 1. simple dev server w/ `npx http-server src`
@@ -14,7 +14,8 @@
   - A counter w/ LitElement!  :)
   - 47 requests though!
 
-## It's Dangerous to go it along, pt.2, Developer Workflows and Optimizations
+
+## It's Dangerous to go it along, pt.2, Improved Local Development Workflows and Production Optimzations
 "solve for the DX, but DX must always be _platform_ first no matter what.
 
 ### Goals
@@ -35,7 +36,7 @@
   - parcel approach (index.html?)
 
 
-## The Grand Prize
+## The Grand Prize (Markdown!)
 Now we will make our optimized site
 
 ### Goals
@@ -60,13 +61,14 @@ Now we will make our optimized site
 The "framework stuff"
 
 ### Goals
-1. Markdown
+1. Configuration / Context
+1. Markdown support (on the fly?)
+1. Page Templates (w/ LitElement?)
 1. GraphQL
-1. Templates w/ LitElement?
 1. Evergreen build?
+1. Rethink how to describe the project on the website
 
-
-## Bonus Points
+## Bonus Points / Next Steps
 
 ### Goals
 1. serialize during development?  (dev / prod DX parity)

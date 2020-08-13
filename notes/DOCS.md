@@ -59,3 +59,4 @@ Resources
 - https://github.com/WebReflection/custom-elements#readme
 - Ideas / wish list - https://twitter.com/jordwalke/status/1283902977858629632
 - Lit bundling - https://lit-element.polymer-project.org/guide/build
+- PurgeCSS - https://twitter.com/danielpost/status/1293286796604956673
