@@ -1,33 +1,39 @@
 const Koa = require('koa');
-const { promises: fs } = require("fs");
+const livereload = require("livereload");
 const path = require('path');
+const { promises: fs } = require("fs");
+
 const app = new Koa();
+const liveReloadServer = livereload.createServer();
+const userWorkspace = path.join(process.cwd(), './www');
 
 app.use(async ctx => {
   // console.log(ctx);
   
   if (ctx.request.url === '/') {
-    const indexPath = path.join(process.cwd(), './www', 'index.html');
-
-    ctx.body = await fs.readFile(indexPath, 'utf-8');
+    ctx.redirect('/index.html');
   }
 
+  // make sure this only happens for "pages", nor partials or fixtures, templates, et)
   if (ctx.request.url.indexOf('.html') >= 0) {
-    const htmlPath = path.join(process.cwd(), './www', ctx.request.url);
+    const htmlPath = path.join(userWorkspace, ctx.request.url);
+    let contents = await fs.readFile(htmlPath, 'utf-8');
+    
+    contents = contents.replace('</head>', '<script src="http://localhost:35729/livereload.js?snipver=1"></script></head>');
 
     ctx.set('Content-Type', 'text/html');
-    ctx.body = await fs.readFile(htmlPath, 'utf-8');
+    ctx.body = contents;
   }
 
   if (ctx.request.url.indexOf('.js') >= 0) {
-    const jsPath = path.join(process.cwd(), './www', ctx.request.url);
+    const jsPath = path.join(userWorkspace, ctx.request.url);
 
     ctx.set('Content-Type', 'text/javascript');
     ctx.body = await fs.readFile(jsPath, 'utf-8');
   }
 
   if (ctx.request.url.indexOf('.css') >= 0) {
-    const cssPath = path.join(process.cwd(), './www', ctx.request.url);
+    const cssPath = path.join(userWorkspace, ctx.request.url);
 
     ctx.set('Content-Type', 'text/css');
     ctx.body = await fs.readFile(cssPath, 'utf-8');
@@ -36,3 +42,4 @@ app.use(async ctx => {
 });
 
 app.listen(3000);
+liveReloadServer.watch(userWorkspace);

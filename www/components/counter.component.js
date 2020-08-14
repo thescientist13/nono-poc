@@ -26,6 +26,11 @@ class MyCounter extends LitElement {
     this.count--;
   }
 
+  reset() {
+    console.log('reset!!!!');
+    this.count = 0;
+  }
+
   render() {
     console.log('render', this.count);
     const { count } = this;
@@ -38,6 +43,7 @@ class MyCounter extends LitElement {
         
         <button @click="${this.increment}">+</button>
         <button @click="${this.decrement}">-</button>
+        <button @click="${this.reset}">Reset</button>
       </div>
     `;
   }
