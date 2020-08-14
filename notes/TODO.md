@@ -24,7 +24,7 @@
     - es-dev-server
     - vite
   - ~~web server (`import` support) / replace **http-server**~~
-  - watch mode / live reload
+  - ~~watch mode / live reload~~
 1. NPM Packages w/ import maps
   - skypack or snowpack for development?
   - shim?

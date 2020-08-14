@@ -19,6 +19,7 @@ app.use(async ctx => {
     const htmlPath = path.join(userWorkspace, ctx.request.url);
     let contents = await fs.readFile(htmlPath, 'utf-8');
     
+    // use an HTML parser?  https://www.npmjs.com/package/node-html-parser
     contents = contents.replace('</head>', '<script src="http://localhost:35729/livereload.js?snipver=1"></script></head>');
 
     ctx.set('Content-Type', 'text/html');
