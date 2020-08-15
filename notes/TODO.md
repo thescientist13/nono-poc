@@ -27,7 +27,12 @@
   - ~~watch mode / live reload~~
 1. NPM Packages w/ import maps
   - skypack or snowpack for development?
-  - shim?
+  - ~~use es-modules-shim?~~ - Yes!, with rewrite rules from the dev server to "mirror" _node_modules_
+  - use package.json or scan imports and rewrite?
+    - need to resolve bare imports within packages, like snowpack, one time lookup and generate, e.g. https://github.com/Polymer/lit-element/issues/603
+  - generate as JSON files and import from a <script> tag / path?
+  - get es-modules-shim from _node_modules_
+  - get livereload.js from _node_modules_ too?  :boom:
 1. Production optimizations (seperate from serializtion) / Bundling (rollup)
   - each `import` is a network request, even with HTTP/2, at scale that may not be sustainable
     - also, minify and tree shake
@@ -69,6 +74,7 @@ The "framework stuff"
 1. Rethink how to describe the project on the website
 
 ## Bonus Points / Next Steps
+Some things to really empower the developer experience
 
 ### Goals
 1. serialize during development?  (dev / prod DX parity)
@@ -78,4 +84,7 @@ The "framework stuff"
 1. SFC
 1. custom element registry, replace with `export`?
 1. https://github.com/vitejs/vite#features
-1. ES Modules for dev server?
+
+
+## Refactoring
+- everything goes through a "plugin" / middleware?  how to orchestrate

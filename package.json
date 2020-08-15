@@ -11,9 +11,14 @@
   "main": "./cli/src/index.js",
   "scripts": {
     "lint": "npx eslint \"./cli/**/**/*.js\" \"./www/**/**/*.js\" \"*.js\"",
-    "start": "node ."
+    "develop": "node .",
+    "start": "yarn develop"
   },
   "dependencies": {
+    "lit-element": "^2.3.1",
+    "lit-html": "^1.2.1"
+  },
+  "devDependencies": {
     "koa": "^2.13.0",
     "livereload": "^0.9.1"
   }
