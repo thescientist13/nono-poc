@@ -55,7 +55,7 @@ app.use(async ctx => {
     console.log('node modules!?', ctx.request.url);
     const modulePath = path.join(process.cwd(), ctx.request.url);
     console.log('modulePath', modulePath);
-    const contents = await fs.readFile(modulePath, 'utf-8');
+    const contents = await fs.readFile(modulePath, 'utf-8');  // have to handle CJS vs ESM?
 
     ctx.set('Content-Type', 'text/javascript');
     ctx.body = contents;

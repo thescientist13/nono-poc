@@ -45,9 +45,10 @@
 Now we will make our optimized site
 
 ### Goals
-1. Serialize - browser as a service?
+1. Serialize 
+  - browser as a service?
+  - https://github.com/popeindustries/lit-html-server
 1. <meta> / SEO
-1. IE11 / Polyfills
 
 ### Considerations
 - Over rendering
@@ -78,6 +79,7 @@ Some things to really empower the developer experience
 
 ### Goals
 1. serialize during development?  (dev / prod DX parity)
+1. IE11 / Polyfills
 1. CSS Modules / theming?
 1. SPA
 1. SSR
@@ -86,5 +88,6 @@ Some things to really empower the developer experience
 1. https://github.com/vitejs/vite#features
 
 
-## Refactoring
+## Refactoring / Thoughts / Long Term Challenges
 - everything goes through a "plugin" / middleware?  how to orchestrate
+- CJS vs ESM lookup?
