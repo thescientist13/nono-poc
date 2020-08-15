@@ -1,7 +1,11 @@
+const acorn = require("acorn");
+const { promises: fsp } = require("fs");
+const fs = require('fs');
 const Koa = require('koa');
 const livereload = require('livereload');
 const path = require('path');
 const { promises: fs } = require('fs');
+const walk = require("acorn-walk");
 
 const app = new Koa();
 const liveReloadServer = livereload.createServer();
@@ -18,7 +22,7 @@ app.use(async ctx => {
   if (ctx.request.url.indexOf('.html') >= 0) {
     const htmlPath = path.join(userWorkspace, ctx.request.url);
     const userPackageJson = require(path.join(process.cwd(), './package.json'));
-    let contents = await fs.readFile(htmlPath, 'utf-8');
+    let contents = await fsp.readFile(htmlPath, 'utf-8');
     
     // use an HTML parser?  https://www.npmjs.com/package/node-html-parser
     contents = contents.replace('</head>', '<script src="http://localhost:35729/livereload.js?snipver=1"></script></head>');
@@ -26,17 +30,40 @@ app.use(async ctx => {
     // console.log('dependencies', userPackageJson.dependencies);
     const importMap = {};
     
-    Object.keys(userPackageJson.dependencies).map(async package => {
-      // console.log('resolve package', package);
+    Object.keys(userPackageJson.dependencies).forEach(package => {
       const packageRootPath = path.join(process.cwd(), './node_modules', package);
       const packageJsonPath = path.join(packageRootPath, 'package.json');
       const packageJson = require(packageJsonPath);
+      const packageEntryPointPath = path.join(process.cwd(), './node_modules', package, packageJson.main);
+      const packageFileContents = fs.readFileSync(packageEntryPointPath, 'utf-8');
+
+      walk.simple(acorn.parse(packageFileContents, {sourceType: 'module'}), {
+        ImportDeclaration(node) {
+          console.log(`Found a ImportDeclaration`);
+          const sourceValue = node.source.value;
+
+          if(sourceValue.indexOf('.') !== 0 && sourceValue.indexOf('http') !== 0) {
+            console.log(`found a bare import for ${sourceValue}!!!!!`);
+            importMap[sourceValue] = `/node_modules/${sourceValue}`;
+          }
+        },
+        ExportNamedDeclaration(node) {
+          console.log(`Found a ExportNamedDeclaration`);
+          const sourceValue = node && node.source ? node.source.value : '';
+
+          if(sourceValue.indexOf('.') !== 0 && sourceValue.indexOf('http') !== 0) {
+            console.log(`found a bare import for ${sourceValue}!!!!!`);
+            importMap[sourceValue] = `/node_modules/${sourceValue}`;
+          }
+        }
+      });
       
       // console.log('packageJson', packageJson);
       importMap[package] = `/node_modules/${package}/${packageJson.main}`;
     });
 
-    console.log('importMap', importMap);
+    console.log('importMap all complete', importMap);
+    
     contents = contents.replace('<head>', `
       <head>
         <script defer src="https://unpkg.com/es-module-shims@0.5.2/dist/es-module-shims.js"></script>
@@ -52,10 +79,10 @@ app.use(async ctx => {
   }
 
   if (ctx.request.url.indexOf('/node_modules') >= 0) {
-    console.log('node modules!?', ctx.request.url);
+    // console.log('node modules!?', ctx.request.url);
     const modulePath = path.join(process.cwd(), ctx.request.url);
-    console.log('modulePath', modulePath);
-    const contents = await fs.readFile(modulePath, 'utf-8');  // have to handle CJS vs ESM?
+    // console.log('modulePath', modulePath);
+    const contents = await fsp.readFile(modulePath, 'utf-8');  // have to handle CJS vs ESM?
 
     ctx.set('Content-Type', 'text/javascript');
     ctx.body = contents;
@@ -63,7 +90,7 @@ app.use(async ctx => {
 
   if (ctx.request.url.indexOf('/node_modules') < 0 && ctx.request.url.indexOf('.js') >= 0) {
     const jsPath = path.join(userWorkspace, ctx.request.url);
-    const contents = await fs.readFile(jsPath, 'utf-8');
+    const contents = await fsp.readFile(jsPath, 'utf-8');
     ctx.set('Content-Type', 'text/javascript');
 
     ctx.body = contents;
@@ -73,7 +100,7 @@ app.use(async ctx => {
     const cssPath = path.join(userWorkspace, ctx.request.url);
 
     ctx.set('Content-Type', 'text/css');
-    ctx.body = await fs.readFile(cssPath, 'utf-8');
+    ctx.body = await fsp.readFile(cssPath, 'utf-8');
   }
 
 });
