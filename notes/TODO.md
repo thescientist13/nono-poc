@@ -39,22 +39,31 @@
 
 
 ## Production Build and Optimzations
-1. Production optimizations (seperate from serializtion) / Bundling (rollup)
-  - each `import` is a network request, even with HTTP/2, at scale that may not be sustainable
-    - also, minify and tree shake
-  - module vs nomodule and differential loading?
-  - Babel / PostCSS / Browserslits
-  - parcel approach (index.html?)
+Let's get this thing deployable to production
+
+### Goals
+1. Basic copy / paste build script
+  - how to copy over vendor code, including deps of deps?
+1. Optimize with minify, concat, etc
+1. hashing / cache busting
+
+### Considerations
+- each `import` is a network request, even with HTTP/2, at scale that may not be sustainable
+  - also, minify and tree shake (justification for a simple build tool)
+- module vs nomodule and differential loading?
+- Babel / PostCSS / Browserslist
+- parcel approach (index.html?)
 
 
 ## The Grand Prize
-Now we will make our optimized site
+Now we will optimize our site even more by pre-rendering it and trying to build off the existing HTML by using it to hydrate our JavaScript
 
 ### Goals
 1. Serialize 
   - browser as a service?
   - https://github.com/popeindustries/lit-html-server
 1. <meta> / SEO
+1. hydration?
 
 ### Considerations
 - Over rendering
@@ -65,7 +74,7 @@ Now we will make our optimized site
   - the counter
   - greenwood banner / shelf
   - my blog
-  - API calls
+  - API calls / fetch
 - Inject `<head>`
 
 
@@ -84,12 +93,14 @@ The "framework stuff"
 Some things to really empower the developer experience
 
 - review existing TODOs in notes / Trello board / backlog for outdated
-- everything goes through a "plugin" / middleware?  how to orchestrate?
-- CJS vs ESM lookup? (acorn v8.0.0 - Since Acorn 8.0.0, options.ecmaVersion is required. )
+- everything goes through a "plugin" / middleware?  how to orchestrate hooks and lifecycles?
+- CJS vs ESM lookup? (Since Acorn 8.0.0, options.ecmaVersion is required. )
 - Pre bundle dependencies for development? (a la snowpack)
 - generate import map as JSON file and import from a <script> tag / path
 - serialize during development?  (dev / prod DX parity)
 - live reload of Koa server for development
+- proxy dev server for API calls
+- cache dev server calls, and HMR
 - IE11 / Polyfills
 - CSS Modules / theming?
 - SPA
