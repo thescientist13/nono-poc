@@ -16,7 +16,7 @@
 
 [Git Tag 0.1.0](https://github.com/thescientist13/nono-poc/releases/tag/0.1.0)
 
-## It's Dangerous to go it along, pt.2, Improved Local Development Workflows
+## ✅ It's Dangerous to go it along, pt.2, Improved Local Development Workflows
 "solve for the DX, but DX must always be _platform_ first no matter what.
 
 ### Goals
