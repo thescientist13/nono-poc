@@ -26,13 +26,13 @@
     - vite
   - ~~web server (`import` support) / replace **http-server**~~
   - ~~watch mode / live reload~~
-1. NPM Packages w/ import maps
+1. ~~NPM Packages w/ import maps~~
   - ~~skypack or snowpack for development?~~ will try it from scratch w/ acorn
   - ~~use es-modules-shim?~~ - Yes!, with rewrite rules from the dev server to "mirror" _node_modules_
   - ~~use package.json or scan imports and rewrite?~~
     - need to resolve bare imports within packages, like snowpack, one time lookup and generate, e.g. https://github.com/Polymer/lit-element/issues/603
   - ~~get es-modules-shim from _node_modules_~~
-  - acorn v8
+  - ~~acorn v8~~
   - ~~delete commented out code~~
 
 
