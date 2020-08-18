@@ -18,6 +18,8 @@ This combined with recent progress, and challenges / oppourtunities in Greenwood
 Have led to a bottom up re-thinking of how to approach the project.  Namely, questioning if tools like webpack should own the whole pipeline, and instead aim for an ondemand local development workflow, with a lean and custom production optimization pipeline, enabling build strategies like `strict`, `spa`, and `progressive`, but from "scratch".
 
 ## Vision
+Greenwood should be usable by anyone familiar with HTML / CSS / JS, and additionally, markdown.  With this, the framework will support building a modern site or app for the web.  It will be great for blogs, portfolios, SPAs, and more!  This POC aims to ensure that this is experience can be gauranteed / supported / documented.
+
 Goals of this POC are as follows:
 - Appeal to developers of all skill levels with a project that scales as skills / needs scale.
 - Web Platform first, starting from the ground up using HTML, CSS, JS.
