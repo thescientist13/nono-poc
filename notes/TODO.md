@@ -35,6 +35,7 @@
   - get es-modules-shim from _node_modules_
   - get livereload.js from _node_modules_ too?  :boom:  (and move into bottom snippet with shim)
   - acorn v8
+  - delete commented out code
 1. Production optimizations (seperate from serializtion) / Bundling (rollup)
   - each `import` is a network request, even with HTTP/2, at scale that may not be sustainable
     - also, minify and tree shake
@@ -69,10 +70,9 @@ Now we will make our optimized site
 The "framework stuff"
 
 ### Goals
-1. Configuration / Context
 1. Markdown support (on the fly?)
 1. Page Templates (w/ LitElement?)
-1. GraphQL
+1. GraphQL - GraphQL needs all content built ahead of time though?
 1. Evergreen build?
 1. Rethink how to describe the project on the website
 
@@ -94,3 +94,4 @@ Some things to really empower the developer experience
 ## Refactoring / Thoughts / Long Term Challenges
 - everything goes through a "plugin" / middleware?  how to orchestrate?
 - CJS vs ESM lookup?
+- Pre bundle for development?
