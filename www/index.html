@@ -7,56 +7,9 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'/>
     <meta name='description' content='NoNo POC'/>
 
-    <!-- <script defer src="https://unpkg.com/es-module-shims@0.5.2/dist/es-module-shims.js"></script>
-    <script type="importmap-shim">
-      {
-        "imports": {
-          "lit-html": "https://unpkg.com/lit-html@1.2.1/lit-html.js?module",
-          "lit-element": "https://unpkg.com/lit-element@2.3.1/lit-element.js?module"
-        }
-      }
-    </script> -->
-
-    <!-- "lit-html/lit-html.js": "https://unpkg.com/lit-html@1.2.1/lit-html.js?module",
-    "lit-html/lib/shady-render.js": "https://unpkg.com/lit-html@1..1/lib/shady-render.js?module" -->
-
-    <!-- ==== JavaScriipt ==== -->
-    <!-- <script>
-      class HeaderComponent extends HTMLElement {
-
-        constructor() {
-          super();
-      
-          this.projectName = 'NoNo POC Project';
-          this.root = this.attachShadow({ mode: 'closed' });
-        }
-      
-        connectedCallback() {
-          this.render();
-        }
-      
-        render() {
-          this.root.innerHTML = `
-            <header>
-              <h1>${this.projectName}</h1>
-            </header>
-          `;
-        }
-      }
-      
-      customElements.define('app-header', HeaderComponent);
-    </script> -->
-
     <script src="./components/header.component.js"></script>
     <script src="./components/footer.component.js"></script>
     <script type="module-shim" src="./components/counter.component.js"></script> <!-- note!!!: type=module-shim-->
-
-    <!-- ==== CSS ==== -->
-    <!-- <style>
-      section {
-        margin: 10px;
-      }
-    </style> -->
 
     <link rel="stylesheet" href="./styles.css"></link>
   </head>

@@ -29,11 +29,11 @@ app.use(async ctx => {
     // console.log('dependencies', userPackageJson.dependencies);
     const importMap = {};
     
-    Object.keys(userPackageJson.dependencies).forEach(package => {
-      const packageRootPath = path.join(process.cwd(), './node_modules', package);
+    Object.keys(userPackageJson.dependencies).forEach(dependency => {
+      const packageRootPath = path.join(process.cwd(), './node_modules', dependency);
       const packageJsonPath = path.join(packageRootPath, 'package.json');
       const packageJson = require(packageJsonPath);
-      const packageEntryPointPath = path.join(process.cwd(), './node_modules', package, packageJson.main);
+      const packageEntryPointPath = path.join(process.cwd(), './node_modules', dependency, packageJson.main);
       const packageFileContents = fs.readFileSync(packageEntryPointPath, 'utf-8');
 
       walk.simple(acorn.parse(packageFileContents, {sourceType: 'module'}), {
@@ -58,14 +58,14 @@ app.use(async ctx => {
       });
       
       // console.log('packageJson', packageJson);
-      importMap[package] = `/node_modules/${package}/${packageJson.main}`;
+      importMap[dependency] = `/node_modules/${dependency}/${packageJson.main}`;
     });
 
     console.log('importMap all complete', importMap);
     
     contents = contents.replace('<head>', `
       <head>
-        <script defer src="https://unpkg.com/es-module-shims@0.5.2/dist/es-module-shims.js"></script>
+        <script defer src="/node_modules/es-module-shims/dist/es-module-shims.js"></script>
         <script type="importmap-shim">
           {
             "imports": ${JSON.stringify(importMap)}

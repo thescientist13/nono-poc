@@ -140,6 +140,11 @@ encodeurl@^1.0.2:
   resolved "https://registry.yarnpkg.com/encodeurl/-/encodeurl-1.0.2.tgz#ad3ff4c86ec2d029322f5a02c3a9a606c95b3f59"
   integrity sha1-rT/0yG7C0CkyL1oCw6mmBslbP1k=
 
+es-module-shims@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/es-module-shims/-/es-module-shims-0.5.2.tgz#9bea003e84a11bdc052b9f52464671176509f520"
+  integrity sha512-cXSy7EPyZc6Iq4AjyWXMqMURXgFguduPN7nxtfI0WsV4C83wNHrdxf0oxhzDPZU/8zB6YFllR24HMG/EBVN/GQ==
+
 escape-html@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"

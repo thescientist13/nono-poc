@@ -31,11 +31,9 @@
   - ~~use es-modules-shim?~~ - Yes!, with rewrite rules from the dev server to "mirror" _node_modules_
   - ~~use package.json or scan imports and rewrite?~~
     - need to resolve bare imports within packages, like snowpack, one time lookup and generate, e.g. https://github.com/Polymer/lit-element/issues/603
-  - generate as JSON files and import from a <script> tag / path?
-  - get es-modules-shim from _node_modules_
-  - get livereload.js from _node_modules_ too?  :boom:  (and move into bottom snippet with shim)
+  - ~~get es-modules-shim from _node_modules_~~
   - acorn v8
-  - delete commented out code
+  - ~~delete commented out code~~
 
 
 ## Production Build and Optimzations
@@ -47,7 +45,7 @@
   - parcel approach (index.html?)
 
 
-## The Grand Prize (Markdown!)
+## The Grand Prize
 Now we will make our optimized site
 
 ### Goals
@@ -69,7 +67,7 @@ Now we will make our optimized site
 - Inject `<head>`
 
 
-## Extending the Authoring Experience
+## Extending the Authoring Experience (Markdown!)
 The "framework stuff"
 
 ### Goals
@@ -84,12 +82,13 @@ Some things to really empower the developer experience
 
 ### Goals / Issue Tracking in Greenwood
 1. Console / debug logging
+1. generate import map as JSON file and import from a <script> tag / path
 1. serialize during development?  (dev / prod DX parity)
 1. IE11 / Polyfills
 1. CSS Modules / theming?
 1. SPA
 1. SSR
-1. SFC
+1. SFC ?  (I guess that's web components already are?)
 1. custom element registry, replace with `export`?
 1. https://github.com/vitejs/vite#features
 
