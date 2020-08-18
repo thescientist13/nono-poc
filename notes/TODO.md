@@ -77,23 +77,22 @@ The "framework stuff"
 1. Evergreen build?
 1. Rethink how to describe the project on the website
 
-## Bonus Points / Next Steps
+
+## Bonus Points / Next Steps / Refactoring / Issue Tracking in Greenwood
 Some things to really empower the developer experience
 
-### Goals / Issue Tracking in Greenwood
-1. Console / debug logging
-1. generate import map as JSON file and import from a <script> tag / path
-1. serialize during development?  (dev / prod DX parity)
-1. IE11 / Polyfills
-1. CSS Modules / theming?
-1. SPA
-1. SSR
-1. SFC ?  (I guess that's web components already are?)
-1. custom element registry, replace with `export`?
-1. https://github.com/vitejs/vite#features
-
-
-## Refactoring / Thoughts / Long Term Challenges
+- review existing TODOs in notes / Trello board / backlog for outdated
 - everything goes through a "plugin" / middleware?  how to orchestrate?
-- CJS vs ESM lookup?
-- Pre bundle for development?
+- CJS vs ESM lookup? (acorn v8.0.0 - Since Acorn 8.0.0, options.ecmaVersion is required. )
+- Pre bundle dependencies for development? (a la snowpack)
+- generate import map as JSON file and import from a <script> tag / path
+- serialize during development?  (dev / prod DX parity)
+- live reload of Koa server for development
+- IE11 / Polyfills
+- CSS Modules / theming?
+- SPA
+- SSR
+- SFC ?  (I guess that's web components already are?)
+- Console / debug logging for project
+- custom element registry, replace with `export`?
+- https://github.com/vitejs/vite#features
