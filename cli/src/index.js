@@ -1,10 +1,10 @@
-const acorn = require("acorn");
-const { promises: fsp } = require("fs");
+const acorn = require('acorn');
+const { promises: fsp } = require('fs');
 const fs = require('fs');
 const Koa = require('koa');
 const livereload = require('livereload');
 const path = require('path');
-const walk = require("acorn-walk");
+const walk = require('acorn-walk');
 
 const app = new Koa();
 const liveReloadServer = livereload.createServer();
@@ -36,21 +36,21 @@ app.use(async ctx => {
       const packageEntryPointPath = path.join(process.cwd(), './node_modules', dependency, packageJson.main);
       const packageFileContents = fs.readFileSync(packageEntryPointPath, 'utf-8');
 
-      walk.simple(acorn.parse(packageFileContents, {sourceType: 'module'}), {
+      walk.simple(acorn.parse(packageFileContents, { sourceType: 'module' }), {
         ImportDeclaration(node) {
-          console.log(`Found a ImportDeclaration`);
+          console.log('Found a ImportDeclaration');
           const sourceValue = node.source.value;
 
-          if(sourceValue.indexOf('.') !== 0 && sourceValue.indexOf('http') !== 0) {
+          if (sourceValue.indexOf('.') !== 0 && sourceValue.indexOf('http') !== 0) {
             console.log(`found a bare import for ${sourceValue}!!!!!`);
             importMap[sourceValue] = `/node_modules/${sourceValue}`;
           }
         },
         ExportNamedDeclaration(node) {
-          console.log(`Found a ExportNamedDeclaration`);
+          console.log('Found a ExportNamedDeclaration');
           const sourceValue = node && node.source ? node.source.value : '';
 
-          if(sourceValue.indexOf('.') !== 0 && sourceValue.indexOf('http') !== 0) {
+          if (sourceValue.indexOf('.') !== 0 && sourceValue.indexOf('http') !== 0) {
             console.log(`found a bare import for ${sourceValue}!!!!!`);
             importMap[sourceValue] = `/node_modules/${sourceValue}`;
           }
@@ -81,7 +81,7 @@ app.use(async ctx => {
     // console.log('node modules!?', ctx.request.url);
     const modulePath = path.join(process.cwd(), ctx.request.url);
     // console.log('modulePath', modulePath);
-    const contents = await fsp.readFile(modulePath, 'utf-8');  // have to handle CJS vs ESM?
+    const contents = await fsp.readFile(modulePath, 'utf-8'); // have to handle CJS vs ESM?
 
     ctx.set('Content-Type', 'text/javascript');
     ctx.body = contents;
