@@ -35,6 +35,8 @@
   - ~~acorn v8~~
   - ~~delete commented out code~~
 
+[Git Tag 0.2.0](https://github.com/thescientist13/nono-poc/releases/tag/0.2.0)
+
 
 ## Production Build and Optimzations
 1. Production optimizations (seperate from serializtion) / Bundling (rollup)
