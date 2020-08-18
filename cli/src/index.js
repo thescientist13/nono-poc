@@ -4,7 +4,6 @@ const fs = require('fs');
 const Koa = require('koa');
 const livereload = require('livereload');
 const path = require('path');
-const { promises: fs } = require('fs');
 const walk = require("acorn-walk");
 
 const app = new Koa();
