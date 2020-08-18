@@ -1,7 +1,7 @@
 const Koa = require('koa');
-const livereload = require("livereload");
+const livereload = require('livereload');
 const path = require('path');
-const { promises: fs } = require("fs");
+const { promises: fs } = require('fs');
 
 const app = new Koa();
 const liveReloadServer = livereload.createServer();
