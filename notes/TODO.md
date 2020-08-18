@@ -14,9 +14,9 @@
   - A counter w/ LitElement!  :)
   - 47 requests though!
 
-[Git Tag 0.1.0]()
+[Git Tag 0.1.0](https://github.com/thescientist13/nono-poc/releases/tag/0.1.0)
 
-## It's Dangerous to go it along, pt.2, Improved Local Development Workflows and Production Optimzations
+## It's Dangerous to go it along, pt.2, Improved Local Development Workflows
 "solve for the DX, but DX must always be _platform_ first no matter what.
 
 ### Goals
@@ -36,6 +36,9 @@
   - get livereload.js from _node_modules_ too?  :boom:  (and move into bottom snippet with shim)
   - acorn v8
   - delete commented out code
+
+
+## Production Build and Optimzations
 1. Production optimizations (seperate from serializtion) / Bundling (rollup)
   - each `import` is a network request, even with HTTP/2, at scale that may not be sustainable
     - also, minify and tree shake
