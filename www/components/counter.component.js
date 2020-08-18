@@ -6,24 +6,24 @@ class MyCounter extends LitElement {
     super();
 
     this.count = 0;
-  };
+  }
 
   static get properties() {
     return {
       count: {
         type: Number
       }
-    }
+    };
   }
 
   increment() {
     console.log('increment!');
-    this.count++;
+    this.count = this.count += 1;
   }
 
   decrement() {
     console.log('decrement!');
-    this.count--;
+    this.count = this.count -= 1;
   }
 
   reset() {

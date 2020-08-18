@@ -10,6 +10,7 @@
   },
   "main": "./cli/src/index.js",
   "scripts": {
+    "lint": "npx eslint \"./cli/**/**/*.js\" \"./www/**/**/*.js\" \"*.js\"",
     "start": "node ."
   },
   "dependencies": {
