@@ -12,8 +12,7 @@
   "scripts": {
     "lint": "npx eslint \"./cli/**/**/*.js\" \"./www/**/**/*.js\" \"*.js\"",
     "build": "parcel build ./www/*.html -d ./public/",
-    "develop": "node .",
-    "develop:parcel": "parcel ./www/*.html -d ./public/",
+    "develop": "parcel ./www/*.html -d ./public/.",
     "start": "yarn develop",
     "serve": "yarn build && cd ./public/ && npx http-server"
   },
