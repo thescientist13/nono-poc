@@ -11,8 +11,8 @@
 ### Goals
 1. simple dev server w/ `npx http-server src`
 1. External Packages w/ import maps and CDN
-  - A counter w/ LitElement!  :)
-  - 47 requests though!
+    - A counter w/ LitElement!  :)
+    - 47 requests though!
 
 [Git Tag 0.1.0](https://github.com/thescientist13/nono-poc/releases/tag/0.1.0)
 
@@ -21,19 +21,19 @@
 
 ### Goals
 1. ~~Robust dev server (koa?) - node v12~~
-  - ~~Options?~~ - will try it myself :)
-    - es-dev-server
-    - vite
-  - ~~web server (`import` support) / replace **http-server**~~
-  - ~~watch mode / live reload~~
+    - ~~Options?~~ - will try it myself :)
+      - es-dev-server
+      - vite
+    - ~~web server (`import` support) / replace **http-server**~~
+    - ~~watch mode / live reload~~
 1. ~~NPM Packages w/ import maps~~
-  - ~~skypack or snowpack for development?~~ will try it from scratch w/ acorn
-  - ~~use es-modules-shim?~~ - Yes!, with rewrite rules from the dev server to "mirror" _node_modules_
-  - ~~use package.json or scan imports and rewrite?~~
-    - need to resolve bare imports within packages, like snowpack, one time lookup and generate, e.g. https://github.com/Polymer/lit-element/issues/603
-  - ~~get es-modules-shim from _node_modules_~~
-  - ~~acorn v8~~
-  - ~~delete commented out code~~
+    - ~~skypack or snowpack for development?~~ will try it from scratch w/ acorn
+    - ~~use es-modules-shim?~~ - Yes!, with rewrite rules from the dev server to "mirror" _node_modules_
+    - ~~use package.json or scan imports and rewrite?~~
+      - need to resolve bare imports within packages, like snowpack, one time lookup and generate, e.g. https://github.com/Polymer/lit-element/issues/603
+    - ~~get es-modules-shim from _node_modules_~~
+    - ~~acorn v8~~
+    - ~~delete commented out code~~
 
 [Git Tag 0.2.0](https://github.com/thescientist13/nono-poc/releases/tag/0.2.0)
 
@@ -43,16 +43,18 @@ Let's get this thing deployable to production
 
 ### Goals
 1. Basic copy / paste build script
-  - how to copy over vendor code, including deps of deps?
+    - how to copy over vendor code, including deps of deps?
+1. Bundle with Rollup?
 1. Optimize with minify, concat, etc
 1. hashing / cache busting
+1. Deploy to Netlify
 
 ### Considerations
-- each `import` is a network request, even with HTTP/2, at scale that may not be sustainable
-  - also, minify and tree shake (justification for a simple build tool)
+- each `import` is a network request so even with HTTP/2, at scale that may not be sustainable - that's why we still bundle!
+  - parcel approach (index.html?)
+- and also, minify and tree shake
 - module vs nomodule and differential loading?
-- Babel / PostCSS / Browserslist
-- parcel approach (index.html?)
+- Babel / PostCSS / Browserslist?
 
 
 ## The Grand Prize
@@ -60,8 +62,8 @@ Now we will optimize our site even more by pre-rendering it and trying to build 
 
 ### Goals
 1. Serialize 
-  - browser as a service?
-  - https://github.com/popeindustries/lit-html-server
+    - browser as a service?
+    - https://github.com/popeindustries/lit-html-server
 1. <meta> / SEO
 1. hydration?
 
@@ -72,6 +74,7 @@ Now we will optimize our site even more by pre-rendering it and trying to build 
 - code splitting
 - Use cases
   - the counter
+  - greenwood getting started
   - greenwood banner / shelf
   - my blog
   - API calls / fetch
@@ -105,7 +108,9 @@ Some things to really empower the developer experience
 - CSS Modules / theming?
 - SPA
 - SSR
+- HTTP/2 for dev server  (streaming dev server?)
 - SFC ?  (I guess that's web components already are?)
 - Console / debug logging for project
 - custom element registry, replace with `export`?
 - https://github.com/vitejs/vite#features
+- web packaging?
