@@ -11,18 +11,23 @@
   "main": "./cli/src/index.js",
   "scripts": {
     "lint": "npx eslint \"./cli/**/**/*.js\" \"./www/**/**/*.js\" \"*.js\"",
+    "build": "npx rimraf ./public && rollup -c ./rollup.config.js",
     "develop": "node .",
-    "start": "yarn develop"
+    "start": "yarn develop",
+    "serve": "yarn build && cd ./public && npx http-server"
   },
   "dependencies": {
     "lit-element": "^2.3.1",
     "lit-html": "^1.2.1"
   },
   "devDependencies": {
+    "@open-wc/rollup-plugin-html": "^1.2.2",
+    "@rollup/plugin-node-resolve": "^9.0.0",
     "acorn": "^8.0.1",
     "acorn-walk": "^8.0.0",
     "es-module-shims": "^0.5.2",
     "koa": "^2.13.0",
-    "livereload": "^0.9.1"
+    "livereload": "^0.9.1",
+    "rollup": "^2.26.5"
   }
 }

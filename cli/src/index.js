@@ -27,6 +27,7 @@ app.use(async ctx => {
     // use an HTML parser?  https://www.npmjs.com/package/node-html-parser
     contents = contents.replace('</head>', '<script src="http://localhost:35729/livereload.js?snipver=1"></script></head>');
     
+    contents = contents.replace(/type="module"/g, 'type="module-shim"');
     // console.log('dependencies', userPackageJson.dependencies);
     const importMap = {};
     
@@ -108,5 +109,6 @@ app.use(async ctx => {
 app.listen(port, () => {
   console.log(`server started at localhost:${port}`);
   console.log(`watching directory "${userWorkspace}" for changes.`);
+
   liveReloadServer.watch(userWorkspace);
 });
