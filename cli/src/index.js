@@ -8,6 +8,7 @@ const walk = require('acorn-walk');
 
 const app = new Koa();
 const liveReloadServer = livereload.createServer();
+const port = 3000;
 const userWorkspace = path.join(process.cwd(), './www');
 
 app.use(async ctx => {
@@ -104,5 +105,8 @@ app.use(async ctx => {
 
 });
 
-app.listen(3000);
-liveReloadServer.watch(userWorkspace);
+app.listen(port, () => {
+  console.log(`server started at localhost:${port}`);
+  console.log(`watching directory "${userWorkspace}" for changes.`);
+  liveReloadServer.watch(userWorkspace);
+});
