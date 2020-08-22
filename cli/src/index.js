@@ -109,6 +109,5 @@ app.use(async ctx => {
 app.listen(port, () => {
   console.log(`server started at localhost:${port}`);
   console.log(`watching directory "${userWorkspace}" for changes.`);
-
   liveReloadServer.watch(userWorkspace);
 });
