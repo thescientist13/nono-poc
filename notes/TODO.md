@@ -44,20 +44,25 @@ Let's get this thing deployable to production
 ### Goals
 1. Basic copy / paste build script
     - how to copy over vendor code, including deps of deps?
-1. Bundle with Rollup?
-1. Bundle with Parcel - https://github.com/thescientist13/nono-poc/pull/3
+1. ~~Bundle with Rollup?~~ https://github.com/thescientist13/nono-poc/pull/4
+    - ~~heavier than Parcel?  100KB vs 50KB, still need to add terser since Parcel minifies~~
+    - ~~get CSS working~~
+    - better output (ESM -> ESM)
+    - half the size of Parcel
+    - more like webpack and a little bit of Gulp, and not as much of a blackbox like Parcel
+1. ~~Bundle with Parcel~~ - https://github.com/thescientist13/nono-poc/pull/3
     - super fast, would be great if it could JiT (e.g. bundleless)
     - globing against a bunch of index.html file is :chef-kiss:
     - worked right out of the box within 30 minutes, had the whole thing building
     - does all our node modules resolution for us!
-    - can be used with our own dev server!!? - https://parceljs.org/getting_started.html
+    - can be used with our own dev server? - https://parceljs.org/getting_started.html
     - seeing the dev output is nice
     - test it with HMR?
-1. Optimize with minify, concat, etc
+1. ~~Optimize with minify, concat, etc~~
     - parcel does it for us, what about the evergreen build?
 1. hashing / cache busting
     - parcel does it for us
-1. Deploy to Netlify
+1. ~~Deploy to Netlify~~
 
 ### Considerations
 - each `import` is a network request so even with HTTP/2, at scale that may not be sustainable - that's why we still bundle!
@@ -72,10 +77,15 @@ Now we will optimize our site even more by pre-rendering it and trying to build 
 
 ### Goals
 1. Serialize 
+    - serialize from src / use existing server, (output to post directory, then bundle on post directory? )
     - browser as a service?
     - https://github.com/popeindustries/lit-html-server
 1. <meta> / SEO
-1. hydration?
+1. hydration / double console
+1. Lighthoue perf
+    - inline CSS / JS
+    - bundle
+
 
 ### Considerations
 - Over rendering
@@ -116,6 +126,7 @@ Some things to really empower the developer experience
 - proxy dev server for API calls
 - cache dev server calls, and HMR
 - IE11 / Polyfills
+- differential loading
 - CSS Modules / theming?
 - SPA
 - SSR
