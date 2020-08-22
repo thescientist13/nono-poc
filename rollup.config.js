@@ -22,7 +22,8 @@ export default [{
   plugins: [
     multiInput(),
     postcss({
-      extract: true
+      extract: true,
+      minimize: true
     })
   ]
 }];
