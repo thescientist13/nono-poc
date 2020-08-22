@@ -45,8 +45,18 @@ Let's get this thing deployable to production
 1. Basic copy / paste build script
     - how to copy over vendor code, including deps of deps?
 1. Bundle with Rollup?
+1. Bundle with Parcel - https://github.com/thescientist13/nono-poc/pull/3
+    - super fast, would be great if it could JiT (e.g. bundleless)
+    - globing against a bunch of index.html file is :chef-kiss:
+    - worked right out of the box within 30 minutes, had the whole thing building
+    - does all our node modules resolution for us!
+    - can be used with our own dev server!!? - https://parceljs.org/getting_started.html
+    - seeing the dev output is nice
+    - test it with HMR?
 1. Optimize with minify, concat, etc
+    - parcel does it for us, what about the evergreen build?
 1. hashing / cache busting
+    - parcel does it for us
 1. Deploy to Netlify
 
 ### Considerations
@@ -96,6 +106,7 @@ The "framework stuff"
 Some things to really empower the developer experience
 
 - review existing TODOs in notes / Trello board / backlog for outdated
+- evaluate [htm](https://github.com/developit/htm)?
 - everything goes through a "plugin" / middleware?  how to orchestrate hooks and lifecycles?
 - CJS vs ESM lookup? (Since Acorn 8.0.0, options.ecmaVersion is required. )
 - Pre bundle dependencies for development? (a la snowpack)
@@ -114,3 +125,5 @@ Some things to really empower the developer experience
 - custom element registry, replace with `export`?
 - https://github.com/vitejs/vite#features
 - web packaging?
+- dev server overlay (with build errors like what would be in the terminal)
+- reuse server for serve task
