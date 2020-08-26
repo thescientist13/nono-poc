@@ -7,7 +7,9 @@ import { terser } from 'rollup-plugin-terser';
 export default [{
   input: 'www/**/*.html',
   output: { 
-    dir: 'public' 
+    dir: 'public',
+    entryFileNames: '[name].[hash].js',
+    chunkFileNames: '[name].[hash].js'
   },
   plugins: [
     nodeResolve(),
@@ -16,8 +18,8 @@ export default [{
   ]
 }, {
   input: 'www/**/*.css', // TODO emits a www/styles.js file?
-  output: {
-    dir: 'public' 
+  output: {  // TODO CSS filename hashing / cache busting
+    dir: 'public'
   },
   plugins: [
     multiInput(),
