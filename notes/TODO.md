@@ -107,9 +107,19 @@ The "framework stuff"
 ### Goals
 1. Markdown support (on the fly?)
 1. Page Templates (w/ LitElement?)
-1. GraphQL - GraphQL needs all content built ahead of time though?
+1. GraphQL
 1. Evergreen build?
 1. Rethink how to describe the project on the website
+
+### Consideration
+- Page Templates
+    - using HTML as a starting point and script tags is leading to much better network waterfall
+    - but could still use the concept of a page-component that auto hooks into GraphQL?es
+- GraphQL
+    - GraphQL needs all content built ahead of time though?
+    - hot reload graphQL
+    - somethnig lighter than Apollo?, or strip it all out somehow?
+- dedupe content
 
 
 ## Bonus Points / Next Steps / Refactoring / Issue Tracking in Greenwood
