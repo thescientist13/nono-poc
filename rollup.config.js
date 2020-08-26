@@ -18,7 +18,7 @@ export default [{
   ]
 }, {
   input: 'www/**/*.css', // TODO emits a www/styles.js file?
-  output: {  // TODO CSS filename hashing / cache busting - https://github.com/egoist/rollup-plugin-postcss/pull/226
+  output: { // TODO CSS filename hashing / cache busting - https://github.com/egoist/rollup-plugin-postcss/pull/226
     dir: 'public'
   },
   plugins: [
