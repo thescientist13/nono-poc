@@ -53,7 +53,7 @@ app.use(async ctx => {
           const sourceValue = node && node.source ? node.source.value : '';
 
           if (sourceValue.indexOf('.') !== 0 && sourceValue.indexOf('http') !== 0) {
-            console.log(`found a bare import for ${sourceValue}!!!!!`);
+            console.log(`found a bare export for ${sourceValue}!!!!!`);
             importMap[sourceValue] = `/node_modules/${sourceValue}`;
           }
         }
@@ -70,7 +70,7 @@ app.use(async ctx => {
         <script defer src="/node_modules/es-module-shims/dist/es-module-shims.js"></script>
         <script type="importmap-shim">
           {
-            "imports": ${JSON.stringify(importMap)}
+            "imports": ${JSON.stringify(importMap, null, 1)}
           }
         </script>
     `);
