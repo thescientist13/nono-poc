@@ -41,7 +41,7 @@
 ## Production Build and Optimzations
 Let's get this thing deployable to production
 
-### Goals
+### ✅Goals
 1. Basic copy / paste build script
     - how to copy over vendor code, including deps of deps?
 1. ~~Bundle with Rollup?~~ https://github.com/thescientist13/nono-poc/pull/4
@@ -71,6 +71,7 @@ Let's get this thing deployable to production
 - module vs nomodule and differential loading?
 - Babel / PostCSS / Browserslist?
 
+[Git Tag 0.3.0](https://github.com/thescientist13/nono-poc/releases/tag/0.3.0)
 
 ## The Grand Prize
 Now we will optimize our site even more by pre-rendering it and trying to build off the existing HTML by using it to hydrate our JavaScript
@@ -125,6 +126,9 @@ The "framework stuff"
 ## Bonus Points / Next Steps / Refactoring / Issue Tracking in Greenwood
 Some things to really empower the developer experience
 
+- babel / browserslist / postcss
+- CSS based filename hashing
+- bundle / rollup `<script>` tags?
 - review existing TODOs in notes / Trello board / backlog for outdated
 - evaluate [htm](https://github.com/developit/htm)?
 - everything goes through a "plugin" / middleware?  how to orchestrate hooks and lifecycles?
