@@ -38,10 +38,10 @@
 [Git Tag 0.2.0](https://github.com/thescientist13/nono-poc/releases/tag/0.2.0)
 
 
-## Production Build and Optimzations
+## ✅Production Build and Optimzations
 Let's get this thing deployable to production
 
-### ✅Goals
+### Goals
 1. Basic copy / paste build script
     - how to copy over vendor code, including deps of deps?
 1. ~~Bundle with Rollup?~~ https://github.com/thescientist13/nono-poc/pull/4
@@ -77,15 +77,21 @@ Let's get this thing deployable to production
 Now we will optimize our site even more by pre-rendering it and trying to build off the existing HTML by using it to hydrate our JavaScript
 
 ### Goals
+1. ~~Evaluate alternatives~~
+    - how does [Scully](https://github.com/scullyio/scully) handle puppeteer - found it https://github.com/ProjectEvergreen/greenwood/issues/341#issuecomment-681197321
+    - [lit-html-server](https://github.com/popeindustries/lit-html-server) - seems only for lit-html templates, so probably not going to helpful for custom elements or shadow DOM
+    - [playwright](https://github.com/microsoft/playwright) - [same as Scully](https://playwright.dev/#version=v1.3.0&path=docs%2Fdocker%2FREADME.md&q=)
+1. Use latest puppeteer
 1. Serialize 
     - serialize from src / use existing server, (output to post directory, then bundle on post directory? )
     - browser as a service?
     - https://github.com/popeindustries/lit-html-server
 1. <meta> / SEO
-1. hydration / double console
+1. hydration / double console and rendering
 1. Lighthoue perf
-    - inline CSS / JS
+    - inline CSS / JS?
     - bundle
+    - TBD
 
 
 ### Considerations
@@ -152,4 +158,4 @@ Some things to really empower the developer experience
 - web packaging?
 - dev server overlay (with build errors like what would be in the terminal)
 - reuse server for serve task
-- upgrade node version to use ESM?
+- upgrade to node version v14 to use ESM in the greenwood code?
