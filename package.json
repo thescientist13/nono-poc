@@ -11,8 +11,8 @@
   "main": "./cli/src/index.js",
   "scripts": {
     "lint": "npx eslint \"./cli/**/**/*.js\" \"./www/**/**/*.js\" \"*.js\"",
-    "build": "npx rimraf ./public && rollup -c ./rollup.config.js",
-    "develop": "node .",
+    "build": "npx rimraf ./public ./.greenwood && node . build",
+    "develop": "node . develop",
     "start": "yarn develop",
     "serve": "yarn build && cd ./public && npx http-server"
   },
@@ -28,6 +28,7 @@
     "es-module-shims": "^0.5.2",
     "koa": "^2.13.0",
     "livereload": "^0.9.1",
+    "puppeteer": "^1.20.0",
     "rollup": "^2.26.5",
     "rollup-plugin-multi-input": "^1.1.1",
     "rollup-plugin-postcss": "^3.1.5",
