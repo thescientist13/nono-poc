@@ -26,6 +26,7 @@ require('child_process').fork(path.join(__dirname, '..', 'lifecycles', 'serve.js
 // 3) start puppeteer
 const BrowserRunner = require('../lib/browser');
 const browserRunner = new BrowserRunner();
+const polyfillPath = path.join(process.cwd(), 'node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js');
 
 const runBrowser = async (pages) => {
   console.log('run browser on pages', pages);
@@ -34,9 +35,19 @@ const runBrowser = async (pages) => {
   
   try {
     return Promise.all(pages.map(async(page) => {
+      const polyfill = fs.readFileSync(polyfillPath, 'utf8');
       const outputDir = path.join(process.cwd(), '.greenwood');
+      const workspaceDir = path.join(process.cwd(), 'www');
 
       console.log('serializing page...', page);
+
+      // TODO should definitely NOT be writing to user's source directory!!!
+      const originalPagePath = path.join(workspaceDir, page);
+      const originalPageContents = fs.readFileSync(originalPagePath, 'utf8');
+      const originalPageContentsPolyfilled = originalPageContents.replace('<body>', `<script>${polyfill}</script><body>`);
+
+      fs.writeFileSync(originalPagePath, originalPageContentsPolyfilled);
+      
       return await browserRunner
         .serialize(`http://127.0.0.1:3000/${page}`)
         .then(async (html) => {
@@ -46,13 +57,15 @@ const runBrowser = async (pages) => {
           // TODO allow setup / teardown (e.g. module shims, then remove module-shims)
           let htmlModified = html;
 
+          htmlModified = htmlModified.replace(polyfill, '');
           htmlModified = htmlModified.replace(/<script type="importmap-shim">.*?<\/script>/s, '');
           htmlModified = htmlModified.replace(/<script defer="" src="\/node_modules\/es-module-shims\/dist\/es-module-shims.js"><\/script>/, '');
           htmlModified = htmlModified.replace(/<script src="http:\/\/localhost:35729\/livereload.js\?snipver=1"><\/script>/, '');
           htmlModified = htmlModified.replace(/<script type="module-shim"/g, '<script type="module"');
 
           fs.writeFileSync(path.join(target), htmlModified);
-        });
+          fs.writeFileSync(originalPagePath, originalPageContents);
+      });
     }));
   } catch (err) {
     // eslint-disable-next-line no-console
@@ -76,4 +89,4 @@ runBrowser(pages).then(() => {
   // TODO this is a hack just for the sake of the POC, will do for real :)
   // stop Koa instead
   process.kill(process.pid);
-});xw
+});

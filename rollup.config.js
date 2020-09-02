@@ -5,7 +5,7 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
 
 export default [{
-  input: '.greenwood/**/*.html',
+  // input: '.greenwood/**/*.html',
   output: { 
     dir: 'public',
     entryFileNames: '[name].[hash].js',
@@ -13,9 +13,11 @@ export default [{
   },
   plugins: [
     multiInput(),
+    html({
+      files: '.greenwood/**/*.html'
+    }),
     nodeResolve(),
-    terser(),
-    html(),
+    terser()
   ]
 }, {
   input: 'www/**/*.css', // TODO emits a www/styles.js file?
