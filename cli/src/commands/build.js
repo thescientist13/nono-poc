@@ -65,7 +65,7 @@ const runBrowser = async (pages) => {
 
           fs.writeFileSync(path.join(target), htmlModified);
           fs.writeFileSync(originalPagePath, originalPageContents);
-      });
+        });
     }));
   } catch (err) {
     // eslint-disable-next-line no-console

@@ -8,7 +8,8 @@ const commands = [
 
 console.log(`running command... ${command}`);
 
-switch(command) {
+switch (command) {
+
   case 'build':
     require('child_process').fork(path.join(__dirname, 'commands', 'build.js'));
     break;
@@ -17,5 +18,6 @@ switch(command) {
     break;
   default:
     console.log(`command ${command} unrecognized.  please use one of: ${commands.join(', ')}`);
-    process.exit(1);
+    process.exit(1); // eslint-disable-line no-process-exit
+
 }
