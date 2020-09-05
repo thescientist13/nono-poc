@@ -40,20 +40,20 @@ app.use(async ctx => {
 
       walk.simple(acorn.parse(packageFileContents, { sourceType: 'module' }), {
         ImportDeclaration(node) {
-          console.log('Found a ImportDeclaration');
+          // console.log('Found a ImportDeclaration');
           const sourceValue = node.source.value;
 
           if (sourceValue.indexOf('.') !== 0 && sourceValue.indexOf('http') !== 0) {
-            console.log(`found a bare import for ${sourceValue}!!!!!`);
+            // console.log(`found a bare import for ${sourceValue}!!!!!`);
             importMap[sourceValue] = `/node_modules/${sourceValue}`;
           }
         },
         ExportNamedDeclaration(node) {
-          console.log('Found a ExportNamedDeclaration');
+          // console.log('Found a ExportNamedDeclaration');
           const sourceValue = node && node.source ? node.source.value : '';
 
           if (sourceValue.indexOf('.') !== 0 && sourceValue.indexOf('http') !== 0) {
-            console.log(`found a bare export for ${sourceValue}!!!!!`);
+            // console.log(`found a bare export for ${sourceValue}!!!!!`);
             importMap[sourceValue] = `/node_modules/${sourceValue}`;
           }
         }
@@ -63,7 +63,7 @@ app.use(async ctx => {
       importMap[dependency] = `/node_modules/${dependency}/${packageJson.main}`;
     });
 
-    console.log('importMap all complete', importMap);
+    // console.log('importMap all complete', importMap);
     
     contents = contents.replace('<head>', `
       <head>
@@ -74,6 +74,15 @@ app.use(async ctx => {
           }
         </script>
     `);
+
+    if (process.env.__GWD__ === 'build') { // eslint-disable-line no-underscore-dangle
+      // TODO setup and teardown should be done together
+      // console.log('running in build mode, polyfill WebComponents for puppeteer');
+      contents = contents.replace('<head>', `
+        <head>
+          <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+      `);
+    }
 
     ctx.set('Content-Type', 'text/html');
     ctx.body = contents;
