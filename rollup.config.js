@@ -1,5 +1,5 @@
 // import html from '@open-wc/rollup-plugin-html';
-// import postcss from 'rollup-plugin-postcss';
+import postcss from 'rollup-plugin-postcss';
 // import commonjs from '@rollup/plugin-commonjs';
 import htmlparser2 from 'htmlparser2';
 import multiInput from 'rollup-plugin-multi-input';
@@ -132,7 +132,7 @@ function greenwoodHtmlPlugin() {
 /*
  * TODO
  * 1. ~~Update script paths in HTML~~
- * 2. Add support for CSS
+ * 2. ~~Add support for CSS~~
  * 3. Clean up comments, move TODOs to TODO.md
  * 4. Clean up dependencies
  * 5. Avoid .greenwood/ directory, do everything in public/?
@@ -153,45 +153,16 @@ export default [{
     multiInput(),
     terser()
   ]
+}, {
+  input: 'www/**/*.css', // TODO emits a www/styles.js file?
+  output: { // TODO CSS filename hashing / cache busting - https://github.com/egoist/rollup-plugin-postcss/pull/226
+    dir: 'public'
+  },
+  plugins: [
+    multiInput(),
+    postcss({
+      extract: true,
+      minimize: true
+    })
+  ]
 }];
-
-// export default [{
-//   input: 'www/**/*.js',
-//   output: { 
-//     dir: 'public'
-//     // entryFileNames: '[name].[hash].js',
-//     // chunkFileNames: '[name].[hash].js'
-//   },
-//   plugins: [
-//     myExample(),
-//     multiInput(),
-//     // html({
-//     //   files: 'public/**/*.html'
-//     // }),
-//     nodeResolve(),
-//     terser()
-//   ]
-//   // input: 'www/**/*.js',
-//   // output: { 
-//   //   dir: 'public',
-//   //   entryFileNames: '[name].[hash].js',
-//   //   chunkFileNames: '[name].[hash].js'
-//   // },
-//   // plugins: [
-//   //   multiInput(),
-//   //   nodeResolve(),
-//   //   terser()
-//   // ]
-// }, {
-//   input: 'www/**/*.css', // TODO emits a www/styles.js file?
-//   output: { // TODO CSS filename hashing / cache busting - https://github.com/egoist/rollup-plugin-postcss/pull/226
-//     dir: 'public'
-//   },
-//   plugins: [
-//     multiInput(),
-//     postcss({
-//       extract: true,
-//       minimize: true
-//     })
-//   ]
-// }];
