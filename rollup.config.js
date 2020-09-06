@@ -35,19 +35,12 @@ function greenwoodWorkspaceResolver () {
 
 function greenwoodHtmlPlugin() {
   console.log('ENTER greenwoodHtmlPlugin!!!!!!!');
-  
+  // const userBundles =  new Map();
+
   return {
     name: 'greenwood-html-plugin', // this name will show up in warnings and errors
-    // options(options) {
-    //   console.log('insde options, set to []?!');
-    //   console.log(options);
-    //   return options.input.filter(input => {
-    //     console.log(input);
-    //   });
-    //   return options.input = '';
-    // },
     load(id) {
-      console.log('inside load, id is', id);
+      // console.log('inside load, id is', id);
       if (path.extname(id) === '.html') {
         return '';
       }
@@ -62,13 +55,12 @@ function greenwoodHtmlPlugin() {
             const srcPath = attribs.src;
             const scriptSrc = fs.readFileSync(path.join(workspaceDirectory, srcPath), 'utf-8');
 
-            console.log('emitFile for script => ', srcPath.split('/')[srcPath.split('/').length - 1].replace('.js', ''));
-            // console.log('scriptSrc', scriptSrc);
-            
+            console.log('emitFile for script => ', srcPath);
+
             that.emitFile({
               type: 'chunk',
               id: srcPath,
-              name: srcPath.split('/')[srcPath.split('/').length - 1],
+              name: srcPath.split('/')[srcPath.split('/').length - 1].replace('.js', ''),
               source: scriptSrc
             });
           }
@@ -81,7 +73,7 @@ function greenwoodHtmlPlugin() {
         const inputHtml = options.input[input];
         const html = await fsPromises.readFile(inputHtml, 'utf-8');
 
-        console.log('input file is ', inputHtml);
+        // console.log('input file is ', inputHtml);
         // console.log('html', html);
 
         parser.write(html);
@@ -90,51 +82,63 @@ function greenwoodHtmlPlugin() {
       }
       parser.end();
     },
-    // buildEnd(options) {
-    //   console.log('inside buildEnd, update files?', options);
-    // },
-    resolveId(source) {
-      console.log('inside resolveId for sauce', source);
-      // console.log('source.indexOf(outputDirectory) > 0', source.indexOf(scratchDirectory) === 0);
-      // console.log('path.extname(source)', path.extname(source));
-      // if (path.extname(source) === '.html') {
-      //   console.log('HTML FILE!');
-      //   // return resolvedPath; // this signals that rollup should not ask other plugins or check the file system to find this id
-      // }
-
-      return null; // other ids should be handled as usually
-    },
     async generateBundle(outputOptions, bundles) {
       // console.log('generateBundle', outputOptions);
       // console.log('generateBundle', bundles);
+      // console.log('bundles', bundles);
+      // TODO looping over bundles twice is wildly inneficient, should refactor and safe references once
       for (const bundleId of Object.keys(bundles)) {
         const bundle = bundles[bundleId];
-        console.log('???????', bundle);
+        // console.log('???????', bundle);
 
         // TODO handle (!) Generated empty chunks .greenwood/about, .greenwood/index
         if (bundle.isEntry && path.extname(bundle.facadeModuleId) === '.html') {
-          console.log('tranform entry into HTML file');
           const namePieces = bundle.fileName.split('.');
           const name = `${namePieces[1].split('/')[1]}.html`;
+          const html = await fsPromises.readFile(bundle.facadeModuleId, 'utf-8');
+          let newHtml = html;
           
-          // console.log('entry file name', name);
+          console.log('tranform entry into HTML file', name);
+
+          const parser = new htmlparser2.Parser({
+            onopentag(name, attribs) {
+              if (name === 'script' && attribs.type === 'module') {
+                console.log('hit a script tag!', attribs.src);
+                for (const innerBundleId of Object.keys(bundles)) {
+                  // console.log('facadeId', bundles[innerBundleId].facadeModuleId);
+                  if (bundles[innerBundleId].facadeModuleId.indexOf(attribs.src.replace('.', '')) > 0) {
+                    console.log('update path in HTML for facadeId', bundles[innerBundleId].facadeModuleId);
+                    console.log('replace attribs.src', attribs.src);
+                    console.log('with', innerBundleId);
+                    newHtml = newHtml.replace(attribs.src, innerBundleId);
+                    console.log('*********************');
+                  }
+                }
+              }
+            }
+          });
+
+          parser.write(html);
+          parser.end();
+
           bundle.fileName = name;
-          bundle.code = await fsPromises.readFile(bundle.facadeModuleId, 'utf-8'); // '<noop></noop>';
+          bundle.code = newHtml;
         }
       }
-      console.log('FINAL BUNDLES', bundles);
     }
   };
 }
 
 /*
  * TODO
- * 1. Update script paths in HTML
+ * 1. ~~Update script paths in HTML~~
  * 2. Add support for CSS
  * 3. Clean up comments, move TODOs to TODO.md
  * 4. Clean up dependencies
+ * 5. Avoid .greenwood/ directory, do everything in public/?
  */
 
+// https://github.com/rollup/rollup/issues/2873
 export default [{
   input: '.greenwood/**/*.html',
   output: { 
