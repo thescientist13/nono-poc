@@ -18,7 +18,7 @@ const pages = fs.readdirSync(pagesPath) // TODO make async while starting server
     }
   }).filter(page => page);
 
-console.log('pages', pages);
+// console.log('pages', pages);
 
 // 2) start server
 // TODO this is a hack just for the sake of the POC, will do for real :)
@@ -30,7 +30,7 @@ const browserRunner = new BrowserRunner();
 
 const runBrowser = async (pages) => {
   console.log('run browser on pages', pages);
-  const outputDir = path.join(process.cwd(), 'public');
+  const outputDir = path.join(process.cwd(), '.greenwood');
 
   await fsPromises.mkdir(outputDir);
   await browserRunner.init();
@@ -42,7 +42,7 @@ const runBrowser = async (pages) => {
       return browserRunner
         .serialize(`http://127.0.0.1:3000/${page}`)
         .then(async (html) => {
-          console.log('content arrived!!!');  
+          console.log(`content arrived for page => ${page}!!!`);  
 
           // TODO allow setup / teardown (e.g. module shims, then remove module-shims)
           let htmlModified = html;
