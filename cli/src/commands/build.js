@@ -79,6 +79,6 @@ runBrowser(pages).then(() => {
 
   // TODO this is a hack just for the sake of the POC, will do for real :)
   // stop Koa instead
-  process.kill(process.pid);
   serverProcess.kill('SIGINT');
+  process.kill(process.pid);
 });
