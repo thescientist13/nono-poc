@@ -17,12 +17,10 @@
     "serve": "yarn build && cd ./public && npx http-server"
   },
   "dependencies": {
-    "@rollup/plugin-commonjs": "^15.0.0",
     "lit-element": "^2.3.1",
     "lit-html": "^1.2.1"
   },
   "devDependencies": {
-    "@open-wc/rollup-plugin-html": "^1.2.2",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@webcomponents/webcomponentsjs": "^2.4.4",
     "acorn": "^8.0.1",
