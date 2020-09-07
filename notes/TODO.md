@@ -142,6 +142,8 @@ Let's see if some of the big ticket items are now solved, or easier to work arou
 ## Bonus Points / Next Steps / Refactoring / Issue Tracking in Greenwood
 Some things to really empower the developer experience
 
+- TODOs in code
+- bundle from serialized code or from user workspace?
 - PWA
 - babel / browserslist / postcss
 - CSS based filename hashing
@@ -173,3 +175,12 @@ Some things to really empower the developer experience
 - TypeScript (in userland)
 - import map shim needed (for local dev)?
 - Upgrade Puppeteer (5.x)
+- outreach / pro bono (contributary?)
+- do anything about CEA?
+- really need a debug / verbose mode
+- no need for .greenwood folder, bundle / serialize in memory?
+- canary pipelines / decouple website and project?  (own org?)
+- streaming GraphQL, data in / data out as it becomes available / on demand
+- streaming build, build / bundle as pages are serialized
+- greenwood timestamped cache
+- replace JSDOM with something lighter / faster? - does it matter, only used for tests?
