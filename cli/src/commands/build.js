@@ -22,7 +22,7 @@ const pages = fs.readdirSync(pagesPath) // TODO make async while starting server
 
 // 2) start server
 // TODO this is a hack just for the sake of the POC, will do for real :)
-require('child_process').fork(path.join(__dirname, '..', 'lifecycles', 'serve.js'));
+const serverProcess = require('child_process').fork(path.join(__dirname, '..', 'lifecycles', 'serve.js'));
 
 // 3) start puppeteer
 const BrowserRunner = require('../lib/browser');
@@ -80,4 +80,5 @@ runBrowser(pages).then(() => {
   // TODO this is a hack just for the sake of the POC, will do for real :)
   // stop Koa instead
   process.kill(process.pid);
+  serverProcess.kill('SIGINT');
 });
