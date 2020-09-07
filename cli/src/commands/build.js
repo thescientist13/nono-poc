@@ -1,9 +1,7 @@
+const { execSync } = require('child_process');
 const fs = require('fs');
 const fsPromises = require('fs').promises;
-const { execSync } = require('child_process');
 const path = require('path');
-// const rollup = require('rollup');
-// const rollupConfig = require('../../../rollup.config');
 
 // 1) get all pages / paths (later on will be the graph)
 const pagesPath = path.join(process.cwd(), 'www');
@@ -12,13 +10,9 @@ const pages = fs.readdirSync(pagesPath) // TODO make async while starting server
     const extension = path.extname(file);
 
     if (extension === '.html') {
-      // console.log(`found page: ${file}`);
-      // console.log('pagesPath', pagesPath);
       return file;
     }
   }).filter(page => page);
-
-// console.log('pages', pages);
 
 // 2) start server
 // TODO this is a hack just for the sake of the POC, will do for real :)
