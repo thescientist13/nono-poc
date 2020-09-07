@@ -33,6 +33,7 @@ function greenwoodWorkspaceResolver () {
   };
 }
 
+// https://github.com/rollup/rollup/issues/2873
 function greenwoodHtmlPlugin() {
   console.log('ENTER greenwoodHtmlPlugin!!!!!!!');
   // const userBundles =  new Map();
@@ -129,17 +130,8 @@ function greenwoodHtmlPlugin() {
   };
 }
 
-/*
- * TODO
- * 1. ~~Update script paths in HTML~~
- * 2. ~~Add support for CSS~~
- * 3. Clean up comments, move TODOs to TODO.md
- * 4. Clean up dependencies
- * 5. Avoid .greenwood/ directory, do everything in public/?
- */
-
-// https://github.com/rollup/rollup/issues/2873
 export default [{
+  // TODO Avoid .greenwood/ directory, do everything in public/?
   input: '.greenwood/**/*.html',
   output: { 
     dir: 'public',
