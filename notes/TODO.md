@@ -130,7 +130,7 @@ The "framework stuff"
 - unfified for the graph?
 
 
-## The Grand Prize
+## Profit?
 Let's see if some of the big ticket items are now solved, or easier to work around now
 
 ### Goals
@@ -143,6 +143,7 @@ Let's see if some of the big ticket items are now solved, or easier to work arou
 Some things to really empower the developer experience
 
 - TODOs in code
+- Review / track "Considerations" sections from this doc
 - bundle from serialized code or from user workspace?
 - PWA
 - babel / browserslist / postcss
@@ -184,3 +185,8 @@ Some things to really empower the developer experience
 - streaming build, build / bundle as pages are serialized
 - greenwood timestamped cache
 - replace JSDOM with something lighter / faster? - does it matter, only used for tests?
+- gothub action for puppeteer support?
+- ESBuild ?
+- additional processors / transforms?  (SCSS, SASS, markdown alternatives like YML?)
+- use rehype instead
+- use worker threads somehow for CLI processes like serializing?
