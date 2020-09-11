@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement, html, css } from 'lit-element';
 
 class MyCounter extends LitElement {
 
@@ -14,6 +14,14 @@ class MyCounter extends LitElement {
         type: Number
       }
     };
+  }
+
+  static get styles() {
+    return css`
+      :host p {
+        color: #020202
+      }
+    `;
   }
 
   increment() {
