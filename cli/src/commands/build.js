@@ -12,6 +12,10 @@ const pages = fs.readdirSync(pagesPath) // TODO make async while starting server
     if (extension === '.html') {
       return file;
     }
+
+    if (extension === '.md') {
+      return file.replace(extension, '.html');
+    }
   }).filter(page => page);
 
 // 2) start server

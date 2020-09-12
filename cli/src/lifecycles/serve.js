@@ -28,8 +28,9 @@ app.use(async ctx => {
     const userPackageJson = require(path.join(process.cwd(), './package.json'));
 
     // TODO
-    // - production bundling / serving
+    // - ~~production bundling / serving~~
     // - handle frontmatter / page templates
+    // - seo / meta / (graphql?)
     // - live reload
     if (fs.existsSync(`${barePath}.html`)) {
       contents = await fsp.readFile(`${barePath}.html`, 'utf-8');
