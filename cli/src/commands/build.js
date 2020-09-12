@@ -3,20 +3,40 @@ const fs = require('fs');
 const fsPromises = require('fs').promises;
 const path = require('path');
 
+// https://stackoverflow.com/a/55566081/417806
+const readdirSync = (p, a = []) => {
+  if (fs.statSync(p).isDirectory()) {
+    fs.readdirSync(p).map(f => readdirSync(a[a.push(path.join(p, f)) - 1], a));
+  }
+  return a;
+};
+
 // 1) get all pages / paths (later on will be the graph)
 const pagesPath = path.join(process.cwd(), 'www');
-const pages = fs.readdirSync(pagesPath) // TODO make async while starting server and puppeteer?
+const pages = readdirSync(pagesPath) // TODO make async while starting server and puppeteer?
   .map(file => {
     const extension = path.extname(file);
+    // console.log('file before', file);
+
+    file = file.replace(`${process.cwd()}/www/`, '');
+    // console.log('file after', file);
 
     if (extension === '.html') {
+      if (file.indexOf('templates/') >= 0) {
+        return null;
+      }
       return file;
     }
 
     if (extension === '.md') {
+      if (file.indexOf('pages/') >= 0) {
+        file = file.replace('pages/', '');
+      }
       return file.replace(extension, '.html');
     }
   }).filter(page => page);
+
+// console.log('!!!!pages!!!!', pages);
 
 // 2) start server
 // TODO this is a hack just for the sake of the POC, will do for real :)
@@ -36,12 +56,26 @@ const runBrowser = async (pages) => {
   try {
     return Promise.all(pages.map(async(page) => {
       console.log('serializing page...', page);
+      let customDirectory = '';
 
+      page.split('/')
+        .forEach(segment => {
+          console.log('segment', segment);
+          if (segment.indexOf('.html') < 0) {
+            customDirectory = `${customDirectory}/${segment}`;
+
+            if (!fs.existsSync(path.join(outputDir, customDirectory))) {
+              console.log('marking dir', path.join(outputDir, customDirectory));
+              fs.mkdirSync(path.join(outputDir, customDirectory));
+            }
+          }
+        });
+      
       return browserRunner
         .serialize(`http://127.0.0.1:3000/${page}`)
         .then(async (html) => {
           console.log(`content arrived for page => ${page}!!!`);  
-
+          
           // TODO allow setup / teardown (e.g. module shims, then remove module-shims)
           let htmlModified = html;
 

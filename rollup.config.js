@@ -15,7 +15,8 @@ function greenwoodWorkspaceResolver () {
   return {
     name: 'greenwood-workspace-resolver', // this name will show up in warnings and errors
     resolveId(source) {
-      if (source.indexOf('./') === 0 && path.extname(source) !== '.html' && fs.existsSync(path.join(workspaceDirectory, source))) {
+      // TODO better way to handle relative paths?  happens in generateBundle too
+      if ((source.indexOf('./') === 0 || source.indexOf('/') === 0) && path.extname(source) !== '.html' && fs.existsSync(path.join(workspaceDirectory, source))) {
         const resolvedPath = source.replace(source, path.join(workspaceDirectory, source));
         console.log('resolve THIS sauce to workspace directory, returning ', resolvedPath);
         
@@ -59,6 +60,7 @@ function greenwoodHtmlPlugin() {
         }
       });
 
+      console.log('OPTOINS!!!!!!!!!!', options);
       for (const input in options.input) {
         const inputHtml = options.input[input];
         const html = await fsPromises.readFile(inputHtml, 'utf-8');
@@ -70,6 +72,7 @@ function greenwoodHtmlPlugin() {
     },
     async generateBundle(outputOptions, bundles) {
       // TODO looping over bundles twice is wildly inneficient, should refactor and safe references once
+      console.log('generateBundle???????????');
       for (const bundleId of Object.keys(bundles)) {
         const bundle = bundles[bundleId];
 
@@ -88,7 +91,8 @@ function greenwoodHtmlPlugin() {
                 // console.log('hit a script tag!', attribs.src);
                 for (const innerBundleId of Object.keys(bundles)) {
                   // console.log('facadeId', bundles[innerBundleId].facadeModuleId);
-                  if (bundles[innerBundleId].facadeModuleId.indexOf(attribs.src.replace('.', '')) > 0) {
+                  if (bundles[innerBundleId].facadeModuleId.indexOf(attribs.src.replace('.', '')) > 0 
+                    || bundles[innerBundleId].facadeModuleId.indexOf(attribs.src.replace('/', '')) > 0) {
                     newHtml = newHtml.replace(attribs.src, innerBundleId);
                   }
                 }

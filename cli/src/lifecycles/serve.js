@@ -22,7 +22,7 @@ app.use(async ctx => {
   
   // TODO filter out node modules, only page / user requests from brower
   if (ctx.request.url.endsWith('/')) {
-    console.log('URL ends with /');
+    // console.log('URL ends with /');
     ctx.redirect(`http://localhost:3000${ctx.request.url}index.html`);
   }
 
@@ -49,21 +49,21 @@ app.use(async ctx => {
           </body>
         </html>
     `;
-    console.log('bare path', barePath);
-    console.log('pageTemplatePath', pageTemplatePath);
-    console.log('contentTemplatePath', contentTemplatePath);
+    // console.log('bare path', barePath);
+    // console.log('pageTemplatePath', pageTemplatePath);
+    // console.log('contentTemplatePath', contentTemplatePath);
 
     // TODO
     // - ~~production bundling / serving~~
     // - front and page templates
-    //    - dev
-    //    - prod
+    //    - ~~dev~~
+    //    - prod w/ nested pages...
     // - seo / meta / (graphql?)
     // - live reload of md
     if (fs.existsSync(`${barePath}.html`)) {
       contents = await fsp.readFile(`${barePath}.html`, 'utf-8');
     } else if (fs.existsSync(`${barePath}.md`) || fs.existsSync(`${pageTemplatePath}.md`) || fs.existsSync(contentTemplatePath)) {
-      console.log('yay, is a markdown file!!!!');
+      // console.log('yay, is a markdown file!!!!');
       // TODO all this lookup could probably be handled a bit more gracefully perhaps?
       const markdownPath = fs.existsSync(`${barePath}.md`)
         ? `${barePath}.md`
@@ -86,7 +86,7 @@ app.use(async ctx => {
         contents = await fsp.readFile(`${userWorkspace}/templates/${fm.attributes.template}.html`, 'utf-8');
       }
 
-      contents = contents.replace('<content-outlet></content-outlet>', processedMarkdown.contents)
+      contents = contents.replace('<content-outlet></content-outlet>', processedMarkdown.contents);
     }
     
     // use an HTML parser?  https://www.npmjs.com/package/node-html-parser
