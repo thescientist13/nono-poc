@@ -146,7 +146,10 @@ Some things to really empower the developer experience
 - TODOs in code
 - Review / track "Considerations" sections from this doc
 - `body[unresolved]`
-- bundle from serialized code or from user workspace?
+- 1.0 blog post 
+- External sources
+- Own org?
+- bundle from output serialized code or from user workspace?
 - PWA
 - babel / browserslist / postcss
 - CSS based filename hashing
@@ -198,3 +201,5 @@ Some things to really empower the developer experience
 - netlify analytics for the website now?
 - `npx`
 - new URL
+- how build tools from userland, eg lint for a11y as pages are built?  post build hook?
+- Intelligent asset copy based on static analysis?  Or just default to copying all of _assets/_ ?
