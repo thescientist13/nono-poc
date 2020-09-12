@@ -73,7 +73,7 @@ Let's get this thing deployable to production
 
 [Git Tag 0.3.0](https://github.com/thescientist13/nono-poc/releases/tag/0.3.0)
 
-## Serialization
+## ✅ Serialization
 Now we will optimize our site even more by pre-rendering it and trying to build off the existing HTML by using it to hydrate our JavaScript
 
 ### Goals
@@ -82,20 +82,19 @@ Now we will optimize our site even more by pre-rendering it and trying to build 
     - [lit-html-server](https://github.com/popeindustries/lit-html-server) - seems only for lit-html templates, so probably not going to helpful for custom elements or shadow DOM
     - [playwright](https://github.com/microsoft/playwright) - [same as Scully](https://playwright.dev/#version=v1.3.0&path=docs%2Fdocker%2FREADME.md&q=)
 1. Use latest puppeteer
-1. Serialize 
+1. ~~Serialize~~
     - serialize from src / use existing server, (output to post directory, then bundle on post directory? )
     - browser as a service?
     - https://github.com/popeindustries/lit-html-server
-1. <meta> / SEO
-1. hydration / double console and rendering
-1. Lighthoue perf
-    - inline CSS / JS?
-    - bundle
+1. ~~hydration / double console and rendering~~ - none yet
+1. ~~Lighthoue perf~~
+    - inline CSS / JS? - TBD!
+    - ~~bundle~~ 
     - TBD
 
 
 ### Considerations
-- Over rendering
+-4Over rendering
 - Dedupe Content in JS
 - only bundle code w/ side effects
 - code splitting
@@ -107,6 +106,7 @@ Now we will optimize our site even more by pre-rendering it and trying to build 
   - API calls / fetch
 - Inject `<head>`
 
+[Git Tag 0.4.0](https://github.com/thescientist13/nono-poc/releases/tag/0.4.0)
 
 ## Extending the Authoring Experience (Markdown!)
 The "framework stuff"
@@ -114,6 +114,7 @@ The "framework stuff"
 ### Goals
 1. Markdown support (on the fly?)
 1. Page Templates (w/ LitElement?)
+1. <meta> / SEO
 1. GraphQL
 1. Evergreen build?
 1. Rethink how to describe the project on the website
@@ -144,6 +145,7 @@ Some things to really empower the developer experience
 
 - TODOs in code
 - Review / track "Considerations" sections from this doc
+- `body[unresolved]`
 - bundle from serialized code or from user workspace?
 - PWA
 - babel / browserslist / postcss
@@ -190,3 +192,9 @@ Some things to really empower the developer experience
 - additional processors / transforms?  (SCSS, SASS, markdown alternatives like YML?)
 - use rehype instead
 - use worker threads somehow for CLI processes like serializing?
+- inline JS / CSS at build time? - https://developers.google.com/web/tools/puppeteer/articles/ssr
+- incremental / differential builds: maybe using GitHub actions + a greenwood api to build a single route / page on demand?
+- `body[unresolved]` - https://github.com/thescientist13/nono-poc/pull/5#issuecomment-690810774
+- netlify analytics for the website now?
+- `npx`
+- new URL
