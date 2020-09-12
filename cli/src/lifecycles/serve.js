@@ -1,6 +1,8 @@
 const acorn = require('acorn');
 const { promises: fsp } = require('fs');
 const fs = require('fs');
+const frontmatter = require('front-matter');
+const remarkFrontmatter = require('remark-frontmatter');
 const html = require('rehype-stringify');
 const Koa = require('koa');
 const livereload = require('livereload');
@@ -16,48 +18,75 @@ const port = 3000;
 const userWorkspace = path.join(process.cwd(), './www');
 
 app.use(async ctx => {
-  // console.log(ctx);
+  // console.log('URL', ctx.request.url);
   
-  if (ctx.request.url === '/') {
-    ctx.redirect('/index.html');
+  // TODO filter out node modules, only page / user requests from brower
+  if (ctx.request.url.endsWith('/')) {
+    console.log('URL ends with /');
+    ctx.redirect(`http://localhost:3000${ctx.request.url}index.html`);
   }
 
   // make sure this only happens for "pages", nor partials or fixtures, templates, et)
   if (ctx.request.url.indexOf('.html') >= 0) {
-    const barePath = `${userWorkspace}/${ctx.request.url.replace('.html', '')}`;
+    const barePath = `${userWorkspace}${ctx.request.url.replace('.html', '')}`;
     const userPackageJson = require(path.join(process.cwd(), './package.json'));
+    const pageTemplatePath = barePath.replace(userWorkspace, `${userWorkspace}/pages`);
+    const contentTemplatePath = pageTemplatePath.replace('/index', '.md');
+    // TODO use default page here if it exists
+    let contents = `
+      <!DOCTYPE html>
+        <html lang="en" prefix="og:http://ogp.me/ns#">
+          <head>
+            <title>NoNo POC - ${barePath} Page</title>
+            <meta charset='utf-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1'/>
+            <meta name='description' content='NoNo POC'/>
+          </head>
+          <body>
+            <section>
+              <content-outlet></content-outlet>
+            </section>
+          </body>
+        </html>
+    `;
+    console.log('bare path', barePath);
+    console.log('pageTemplatePath', pageTemplatePath);
+    console.log('contentTemplatePath', contentTemplatePath);
 
     // TODO
     // - ~~production bundling / serving~~
-    // - handle frontmatter / page templates
+    // - front and page templates
+    //    - dev
+    //    - prod
     // - seo / meta / (graphql?)
-    // - live reload
+    // - live reload of md
     if (fs.existsSync(`${barePath}.html`)) {
       contents = await fsp.readFile(`${barePath}.html`, 'utf-8');
-    } else if (fs.existsSync(`${barePath}.md`)) {
-      const markdownContents = await fsp.readFile(`${barePath}.md`, 'utf-8');
-      const markdownHtml = await unified()
+    } else if (fs.existsSync(`${barePath}.md`) || fs.existsSync(`${pageTemplatePath}.md`) || fs.existsSync(contentTemplatePath)) {
+      console.log('yay, is a markdown file!!!!');
+      // TODO all this lookup could probably be handled a bit more gracefully perhaps?
+      const markdownPath = fs.existsSync(`${barePath}.md`)
+        ? `${barePath}.md`
+        : fs.existsSync(contentTemplatePath)
+          ? contentTemplatePath
+          : `${pageTemplatePath}.md`;
+
+      const markdownContents = await fsp.readFile(markdownPath, 'utf-8');
+      // TODO get front matter contents from remark instead
+      const fm = frontmatter(markdownContents);
+      const processedMarkdown = await unified()
         .use(remark)
+        .use(remarkFrontmatter)
         .use(remark2rehype)
         .use(html)
         .process(markdownContents);
 
-      contents = `
-        <!DOCTYPE html>
-          <html lang="en" prefix="og:http://ogp.me/ns#">
-            <head>
-              <title>NoNo POC - Contact Page</title>
-              <meta charset='utf-8'>
-              <meta name='viewport' content='width=device-width, initial-scale=1'/>
-              <meta name='description' content='NoNo POC'/>
-            </head>
-            <body>
-              <section>
-                ${ markdownHtml.contents }
-              </section>
-            </body>
-          </html>
-      `;
+      // use a page template
+      if (fm.attributes.template) {
+        contents = await fsp.readFile(`${userWorkspace}/templates/${fm.attributes.template}.html`, 'utf-8');
+      }
+
+      contents = contents.replace('<content-outlet></content-outlet>', processedMarkdown.contents)
     }
     
     // use an HTML parser?  https://www.npmjs.com/package/node-html-parser

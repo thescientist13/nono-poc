@@ -26,17 +26,20 @@
     "acorn": "^8.0.1",
     "acorn-walk": "^8.0.0",
     "es-module-shims": "^0.5.2",
+    "front-matter": "^4.0.2",
     "htmlparser2": "^4.1.0",
     "koa": "^2.13.0",
     "livereload": "^0.9.1",
     "puppeteer": "^1.20.0",
     "rehype-stringify": "^8.0.0",
+    "remark-frontmatter": "^2.0.0",
     "remark-parse": "^8.0.3",
     "remark-rehype": "^7.0.0",
     "rollup": "^2.26.5",
     "rollup-plugin-multi-input": "^1.1.1",
     "rollup-plugin-postcss": "^3.1.5",
     "rollup-plugin-terser": "^7.0.0",
-    "unified": "^9.2.0"
+    "unified": "^9.2.0",
+    "vfile-matter": "^1.0.2"
   }
 }
