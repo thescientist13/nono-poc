@@ -1,9 +1,13 @@
 const acorn = require('acorn');
 const { promises: fsp } = require('fs');
 const fs = require('fs');
+const html = require('rehype-stringify');
 const Koa = require('koa');
 const livereload = require('livereload');
 const path = require('path');
+const remark = require('remark-parse');
+const remark2rehype = require('remark-rehype');
+const unified = require('unified');
 const walk = require('acorn-walk');
 
 const app = new Koa();
@@ -20,9 +24,40 @@ app.use(async ctx => {
 
   // make sure this only happens for "pages", nor partials or fixtures, templates, et)
   if (ctx.request.url.indexOf('.html') >= 0) {
-    const htmlPath = path.join(userWorkspace, ctx.request.url);
+    const barePath = `${userWorkspace}/${ctx.request.url.replace('.html', '')}`;
     const userPackageJson = require(path.join(process.cwd(), './package.json'));
-    let contents = await fsp.readFile(htmlPath, 'utf-8');
+
+    // TODO
+    // - production bundling / serving
+    // - handle frontmatter / page templates
+    // - live reload
+    if (fs.existsSync(`${barePath}.html`)) {
+      contents = await fsp.readFile(`${barePath}.html`, 'utf-8');
+    } else if (fs.existsSync(`${barePath}.md`)) {
+      const markdownContents = await fsp.readFile(`${barePath}.md`, 'utf-8');
+      const markdownHtml = await unified()
+        .use(remark)
+        .use(remark2rehype)
+        .use(html)
+        .process(markdownContents);
+
+      contents = `
+        <!DOCTYPE html>
+          <html lang="en" prefix="og:http://ogp.me/ns#">
+            <head>
+              <title>NoNo POC - Contact Page</title>
+              <meta charset='utf-8'>
+              <meta name='viewport' content='width=device-width, initial-scale=1'/>
+              <meta name='description' content='NoNo POC'/>
+            </head>
+            <body>
+              <section>
+                ${ markdownHtml.contents }
+              </section>
+            </body>
+          </html>
+      `;
+    }
     
     // use an HTML parser?  https://www.npmjs.com/package/node-html-parser
     contents = contents.replace('</head>', '<script src="http://localhost:35729/livereload.js?snipver=1"></script></head>');
