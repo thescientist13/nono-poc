@@ -92,7 +92,7 @@ module.exports = {
     'no-unused-expressions': 0,
     'no-useless-call': 0,
     'no-void': 0,
-    'no-warning-comments': [1, { 
+    'no-warning-comments': [0, { 
       'terms': [
         'todo',
         ' fixme',
