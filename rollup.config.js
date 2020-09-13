@@ -60,7 +60,6 @@ function greenwoodHtmlPlugin() {
         }
       });
 
-      console.log('OPTOINS!!!!!!!!!!', options);
       for (const input in options.input) {
         const inputHtml = options.input[input];
         const html = await fsPromises.readFile(inputHtml, 'utf-8');
@@ -72,28 +71,21 @@ function greenwoodHtmlPlugin() {
     },
     async generateBundle(outputOptions, bundles) {
       // TODO looping over bundles twice is wildly inneficient, should refactor and safe references once
-      console.log('generateBundle???????????');
       for (const bundleId of Object.keys(bundles)) {
         const bundle = bundles[bundleId];
 
         // TODO handle (!) Generated empty chunks .greenwood/about, .greenwood/index
         if (bundle.isEntry && path.extname(bundle.facadeModuleId) === '.html') {
-          const namePieces = bundle.fileName.split('.');
-          const name = `${namePieces[1].split('/')[1]}.html`;
           const html = await fsPromises.readFile(bundle.facadeModuleId, 'utf-8');
           let newHtml = html;
-          
-          console.log('tranform entry into HTML file', name);
 
           const parser = new htmlparser2.Parser({
             onopentag(name, attribs) {
               if (name === 'script' && attribs.type === 'module') {
-                // console.log('hit a script tag!', attribs.src);
                 for (const innerBundleId of Object.keys(bundles)) {
-                  // console.log('facadeId', bundles[innerBundleId].facadeModuleId);
                   if (bundles[innerBundleId].facadeModuleId.indexOf(attribs.src.replace('.', '')) > 0 
                     || bundles[innerBundleId].facadeModuleId.indexOf(attribs.src.replace('/', '')) > 0) {
-                    newHtml = newHtml.replace(attribs.src, innerBundleId);
+                    newHtml = newHtml.replace(attribs.src, `/${innerBundleId}`);
                   }
                 }
               }
@@ -103,7 +95,8 @@ function greenwoodHtmlPlugin() {
           parser.write(html);
           parser.end();
 
-          bundle.fileName = name;
+          // TODO this seems hacky :D
+          bundle.fileName = bundle.facadeModuleId.replace('.greenwood', './public');
           bundle.code = newHtml;
         }
       }

@@ -16,10 +16,8 @@ const pagesPath = path.join(process.cwd(), 'www');
 const pages = readdirSync(pagesPath) // TODO make async while starting server and puppeteer?
   .map(file => {
     const extension = path.extname(file);
-    // console.log('file before', file);
 
     file = file.replace(`${process.cwd()}/www/`, '');
-    // console.log('file after', file);
 
     if (extension === '.html') {
       if (file.indexOf('templates/') >= 0) {
@@ -60,21 +58,33 @@ const runBrowser = async (pages) => {
 
       page.split('/')
         .forEach(segment => {
-          console.log('segment', segment);
-          if (segment.indexOf('.html') < 0) {
-            customDirectory = `${customDirectory}/${segment}`;
+          if (segment.indexOf('.html') > 0 || segment.indexOf('/') < 0) {
+            segment = segment.replace('.html', '');
+          }
 
-            if (!fs.existsSync(path.join(outputDir, customDirectory))) {
-              console.log('marking dir', path.join(outputDir, customDirectory));
-              fs.mkdirSync(path.join(outputDir, customDirectory));
-            }
+          customDirectory = `${customDirectory}/${segment}`;
+
+          if (!fs.existsSync(path.join(outputDir, customDirectory))) {
+            // console.log('marking dir', path.join(outputDir, customDirectory));
+            fs.mkdirSync(path.join(outputDir, customDirectory));
           }
         });
       
       return browserRunner
         .serialize(`http://127.0.0.1:3000/${page}`)
         .then(async (html) => {
-          console.log(`content arrived for page => ${page}!!!`);  
+          console.log(`content arrived for page => ${page}!!!`);
+          let outputPath = page;
+
+          // TODO seems a little hacky, needs to keep lockstepping with rollup?
+          if (page.indexOf('/') > 0 && page.indexOf('index.html') < 0) {
+            // console.log('non root nested page found!!!!');
+            let pieces = page.split('/');
+ 
+            pieces[pieces.length - 1] = pieces[pieces.length - 1].replace('.html', '/');
+
+            outputPath = `${pieces.join('/')}index.html`;
+          }
           
           // TODO allow setup / teardown (e.g. module shims, then remove module-shims)
           let htmlModified = html;
@@ -86,7 +96,7 @@ const runBrowser = async (pages) => {
           htmlModified = htmlModified.replace(/<script src="http:\/\/localhost:35729\/livereload.js\?snipver=1"><\/script>/, '');
           htmlModified = htmlModified.replace(/<script type="module-shim"/g, '<script type="module"');
 
-          await fsPromises.writeFile(path.join(outputDir, page), htmlModified);
+          await fsPromises.writeFile(path.join(outputDir, outputPath), htmlModified);
 
         });
     }));

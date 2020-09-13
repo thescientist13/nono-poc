@@ -57,9 +57,10 @@ app.use(async ctx => {
     // - ~~production bundling / serving~~
     // - front and page templates
     //    - ~~dev~~
-    //    - prod w/ nested pages...
+    //    - ~~prod w/ nested pages...~~
+    // - mixed index.html output for root vs nested pages
     // - seo / meta / (graphql?)
-    // - live reload of md
+    // - live reload of md ?
     if (fs.existsSync(`${barePath}.html`)) {
       contents = await fsp.readFile(`${barePath}.html`, 'utf-8');
     } else if (fs.existsSync(`${barePath}.md`) || fs.existsSync(`${pageTemplatePath}.md`) || fs.existsSync(contentTemplatePath)) {
