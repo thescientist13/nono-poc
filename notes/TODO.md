@@ -144,6 +144,7 @@ Let's see if some of the big ticket items are now solved, or easier to work arou
 Some things to really empower the developer experience
 
 - TODOs in code
+- better lockstepping between serve and rollup (need a graph / manifest to share?)
 - Review / track "Considerations" sections from this doc
 - `body[unresolved]`
 - 1.0 blog post 
@@ -203,3 +204,4 @@ Some things to really empower the developer experience
 - new URL
 - how build tools from userland, eg lint for a11y as pages are built?  post build hook?
 - Intelligent asset copy based on static analysis?  Or just default to copying all of _assets/_ ?
+- use index.html as a default page template?
