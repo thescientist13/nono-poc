@@ -49,10 +49,10 @@ app.use(async ctx => {
       <!DOCTYPE html>
         <html lang="en" prefix="og:http://ogp.me/ns#">
           <head>
-            <title>NoNo POC - ${barePath} Page</title>
+            <title>${title}</title>
             <meta charset='utf-8'>
             <meta name='viewport' content='width=device-width, initial-scale=1'/>
-            <meta name='description' content='NoNo POC'/>
+            <meta-outlet></meta-outlet>
           </head>
           <body>
             <section>
