@@ -13,6 +13,7 @@ const unified = require('unified');
 const walk = require('acorn-walk');
 
 const app = new Koa();
+const greenwoodConfig = require('../../../greenwood.config');
 const liveReloadServer = livereload.createServer();
 const port = 3000;
 const userWorkspace = path.join(process.cwd(), './www');
@@ -28,11 +29,22 @@ app.use(async ctx => {
 
   // make sure this only happens for "pages", nor partials or fixtures, templates, et)
   if (ctx.request.url.indexOf('.html') >= 0) {
+    let title = greenwoodConfig.title;
+    const metaOutletContent = greenwoodConfig.meta.map(item => {
+      let metaHtml = '';
+    
+      for (const [key, value] of Object.entries(item)) {
+        metaHtml += ` ${key}="${value}"`;
+      }
+    
+      return `<meta${metaHtml}/>`;
+    }).join('\n');
+
     const barePath = `${userWorkspace}${ctx.request.url.replace('.html', '')}`;
     const userPackageJson = require(path.join(process.cwd(), './package.json'));
     const pageTemplatePath = barePath.replace(userWorkspace, `${userWorkspace}/pages`);
     const contentTemplatePath = pageTemplatePath.replace('/index', '.md');
-    // TODO use default page here if it exists
+    // TODO use default page here if it exists?
     let contents = `
       <!DOCTYPE html>
         <html lang="en" prefix="og:http://ogp.me/ns#">
@@ -49,16 +61,12 @@ app.use(async ctx => {
           </body>
         </html>
     `;
-    // console.log('bare path', barePath);
-    // console.log('pageTemplatePath', pageTemplatePath);
-    // console.log('contentTemplatePath', contentTemplatePath);
 
     // TODO
     // - ~~production bundling / serving~~
     // - front and page templates
     //    - ~~dev~~
     //    - ~~prod w/ nested pages...~~
-    // - mixed index.html output for root vs nested pages
     // - seo / meta / (graphql?)
     // - live reload of md ?
     if (fs.existsSync(`${barePath}.html`)) {
@@ -73,7 +81,7 @@ app.use(async ctx => {
           : `${pageTemplatePath}.md`;
 
       const markdownContents = await fsp.readFile(markdownPath, 'utf-8');
-      // TODO get front matter contents from remark instead
+      // TODO get front matter contents from remark-frontmatter instead
       const fm = frontmatter(markdownContents);
       const processedMarkdown = await unified()
         .use(remark)
@@ -87,6 +95,10 @@ app.use(async ctx => {
         contents = await fsp.readFile(`${userWorkspace}/templates/${fm.attributes.template}.html`, 'utf-8');
       }
 
+      // use page title
+      if (fm.attributes.title) {
+        title = `${title} - ${fm.attributes.title}`;
+      }
       contents = contents.replace('<content-outlet></content-outlet>', processedMarkdown.contents);
     }
     
@@ -149,6 +161,12 @@ app.use(async ctx => {
           <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
       `);
     }
+
+    contents = contents.replace('<meta-outlet></meta-outlet>', metaOutletContent);
+
+    // TODO make smarter so that if it already exists, then leave it alone
+    contents = contents.replace(/<title>(.*)<\/title>/, '');
+    contents = contents.replace('<head>', `<head><title>${title}</title>`);
 
     ctx.set('Content-Type', 'text/html');
     ctx.body = contents;

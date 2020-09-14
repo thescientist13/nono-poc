@@ -1,5 +1,6 @@
 ---
 template: post
+title: Second Blog Post
 ---
 
 # Second Blog Post
