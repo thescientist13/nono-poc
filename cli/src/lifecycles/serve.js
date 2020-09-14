@@ -67,7 +67,7 @@ app.use(async ctx => {
     // - front and page templates
     //    - ~~dev~~
     //    - ~~prod w/ nested pages...~~
-    // - seo / meta / (graphql?)
+    // - ~~seo / meta~~ / (graphql?)
     // - live reload of md ?
     if (fs.existsSync(`${barePath}.html`)) {
       contents = await fsp.readFile(`${barePath}.html`, 'utf-8');
