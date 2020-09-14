@@ -1,4 +1,3 @@
-
 const FAVICON_HREF = '/favicon.ico';
 const META_DESCRIPTION = 'Dont outsource your core competency.';
 const TITLE = 'NoNo POC';
