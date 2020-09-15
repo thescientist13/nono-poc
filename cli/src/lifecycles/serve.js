@@ -182,7 +182,16 @@ app.use(async ctx => {
     ctx.body = contents;
   }
 
-  if (ctx.request.url.indexOf('/node_modules') < 0 && ctx.request.url.indexOf('.js') >= 0) {
+  // TODO This is here because of ordering, should make JS / JSON matching less greedy
+  if (ctx.request.url.indexOf('graph.json') >= 0) {
+    const graphPath = path.join(process.cwd(), '.greenwood', 'graph.json');
+    const json = await fsp.readFile(graphPath, 'utf-8');
+
+    ctx.set('Content-Type', 'text/javascript');
+    ctx.body = JSON.parse(json);
+  }
+
+  if (ctx.request.url.indexOf('/node_modules') < 0 && ctx.request.url.indexOf('.js') >= 0 && ctx.request.url.indexOf('.json') < 0) {
     const jsPath = path.join(userWorkspace, ctx.request.url);
     const contents = await fsp.readFile(jsPath, 'utf-8');
     ctx.set('Content-Type', 'text/javascript');

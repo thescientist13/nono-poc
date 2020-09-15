@@ -11,6 +11,8 @@ console.log(`running command... ${command}`);
 // TODO establish develop vs build modes
 process.env.__GWD__ = command; // eslint-disable-line no-underscore-dangle
 
+require('child_process').fork(path.join(__dirname, 'lifecycles', 'graph.js'));
+
 switch (command) {
 
   case 'build':

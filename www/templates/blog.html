@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og:http://ogp.me/ns#">
+
+  <head>
+    <title>NoNo POC - Home Page</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'/>
+    <meta-outlet></meta-outlet>
+
+    <script type="module" src="/components/header.component.js"></script>
+    <script type="module" src="/components/footer.component.js"></script>
+    <script type="module" src="/components/counter.component.js"></script> <!-- note!!!: type=module-shim-->
+
+    <link rel="stylesheet" href="/styles.css"></link>
+  </head>
+
+  <body>
+
+    <section>
+      <app-header></app-header>
+    </section>
+
+    <section>
+      <nav>
+        <ul>
+          <li><a href="/about.html">About Page (about.html)</a></li>
+          <li><a href="/contact.html">Contact Page (contact.md)</a></li>
+          <li><a href="/blog/">Blog Posts (pages/blog/index.html)</a></li>
+        </ul>
+      </nav>
+
+      <div class="content">
+        <content-outlet></content-outlet>
+
+        <ul class="posts-list">
+
+        </ul>
+
+        <a href="/">&lt;&lt; Back</a>
+      </div>
+    </section>
+
+    <section>
+      <app-footer></app-footer>
+    </section>
+
+    <script type="module">
+      fetch('/graph.json')
+        .then(res => res.json())
+        .then(data => {
+          console.log('data', data);
+
+          data
+            .filter(page => {
+              return page.file.indexOf('blog/') >= 0 && page.file.indexOf('index') < 0;
+            }).forEach(post => {
+              console.log('post', post);
+              const li = document.createElement("li");
+              const a = document.createElement("a");
+
+              const textnode = document.createTextNode(post.label);
+              a.href = post.href = post.link;
+              a.appendChild(textnode);
+              
+              li.appendChild(a);
+              document.querySelector('.posts-list').appendChild(li);
+            });
+        });
+    </script>
+  </body>
+
+</html>
