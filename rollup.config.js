@@ -44,7 +44,7 @@ function greenwoodHtmlPlugin() {
       const that = this;
       const parser = new htmlparser2.Parser({
         onopentag(name, attribs) {
-          if (name === 'script' && attribs.type === 'module') {
+          if (name === 'script' && attribs.type === 'module' && attribs.src) {
             const srcPath = attribs.src;
             const scriptSrc = fs.readFileSync(path.join(workspaceDirectory, srcPath), 'utf-8');
 
@@ -81,7 +81,7 @@ function greenwoodHtmlPlugin() {
 
           const parser = new htmlparser2.Parser({
             onopentag(name, attribs) {
-              if (name === 'script' && attribs.type === 'module') {
+              if (name === 'script' && attribs.type === 'module' && attribs.src) {
                 for (const innerBundleId of Object.keys(bundles)) {
                   if (bundles[innerBundleId].facadeModuleId.indexOf(attribs.src.replace('.', '')) > 0 
                     || bundles[innerBundleId].facadeModuleId.indexOf(attribs.src.replace('/', '')) > 0) {

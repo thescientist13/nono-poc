@@ -48,7 +48,9 @@ const runBrowser = async (pages) => {
   console.log('run browser on pages', pages);
   const outputDir = path.join(process.cwd(), '.greenwood');
 
-  await fsPromises.mkdir(outputDir);
+  if (!fs.existsSync(outputDir)) {
+    await fsPromises.mkdir(outputDir);
+  }
   await browserRunner.init();
   
   try {
