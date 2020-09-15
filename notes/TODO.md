@@ -210,3 +210,4 @@ Some things to really empower the developer experience
 - how build tools from userland, eg lint for a11y as pages are built?  post build hook?
 - Intelligent asset copy based on static analysis (e.g. favicon.ico)?  Or just default to copying all of _assets/_ ?
 - use index.html as a default page template?
+- preloading / async / defer modules (optimizations)
