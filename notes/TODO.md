@@ -212,4 +212,7 @@ Some things to really empower the developer experience
 - use index.html as a default page template?
 - preloading / async / defer modules (optimizations)
 - figure out why I can't use pages/blog/index.html
-- (node:82640) ExperimentalWarning: The fs.promises API is experimenta
+- (node:82640) ExperimentalWarning: The fs.promises API is experimental
+- 404 handling
+- sourcemaps
+- support images, JSON, HTML? (via `import`?)
