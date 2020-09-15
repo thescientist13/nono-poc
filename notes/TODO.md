@@ -140,13 +140,19 @@ Let's see if some of the big ticket items are now solved, or easier to work arou
 
 ### Considerations
 
-## Bonus Points / Next Steps / Refactoring / Issue Tracking in Greenwood
+## Bonus Points / Next Steps / Refactoring / Questions / Issue Tracking in Greenwood
 Some things to really empower the developer experience
 
+- CSS livereload breaks
+```
+ Error: ENOENT: no such file or directory, open '/Users/owenbuckley/Workspace/github/repos/nono-poc/www/styles.css?livereload=1600112541593'
+ ```
+- better lockstepping between serve and rollup (need a graph / manifest to share?)
 - TODOs in code
 - Review / track "Considerations" sections from this doc
 - `body[unresolved]`
-- 1.0 blog post 
+- 1.0 blog post
+- handling paths in tempates, e.g. ./, ../, normalize everything to /?
 - External sources
 - Own org?
 - bundle from output serialized code or from user workspace?
@@ -183,7 +189,7 @@ Some things to really empower the developer experience
 - Upgrade Puppeteer (5.x)
 - outreach / pro bono (contributary?)
 - do anything about CEA?
-- really need a debug / verbose mode
+- really need a debug / verbose mode, use `console.info`, supress log in prod mode?
 - no need for .greenwood folder, bundle / serialize in memory?
 - canary pipelines / decouple website and project?  (own org?)
 - streaming GraphQL, data in / data out as it becomes available / on demand
@@ -202,4 +208,5 @@ Some things to really empower the developer experience
 - `npx`
 - new URL
 - how build tools from userland, eg lint for a11y as pages are built?  post build hook?
-- Intelligent asset copy based on static analysis?  Or just default to copying all of _assets/_ ?
+- Intelligent asset copy based on static analysis (e.g. favicon.ico)?  Or just default to copying all of _assets/_ ?
+- use index.html as a default page template?
