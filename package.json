@@ -10,9 +10,10 @@
   },
   "main": "./cli/src/index.js",
   "scripts": {
+    "clean": "npx rimraf ./public ./.greenwood",
     "lint": "npx eslint \"./cli/**/**/*.js\" \"./www/**/**/*.js\" \"*.js\"",
-    "build": "npx rimraf ./public ./.greenwood && node . build",
-    "develop": "node . develop",
+    "build": "yarn clean && node . build",
+    "develop": "yarn clean && node . develop",
     "start": "yarn develop",
     "serve": "yarn build && cd ./public && npx http-server"
   },
