@@ -5,7 +5,7 @@ A plan to get the NoNo POC adapted to Greenwood and what the future of the proje
 Let's review everything in front of us and see what aligns with this new approach:
 1. Capture all TODOs from this repo's source code
 1. ~~Capture all TODOs from _notes/TODO.md_~~
-1. Review Trello Board and link relevant items here
+1. ~~Review / groom Trello Board]~~
 1. ~~Review personal notes and catalog here~~
 1. ~~Review GitHub issues and link relevant items here~~
 1. ~~Flag any good first issues~~
