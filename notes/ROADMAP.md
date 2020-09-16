@@ -13,6 +13,7 @@ Let's review everything in front of us and see what aligns with this new approac
 ## Feature Parity aka Architectural Digest (complete by 10/5/2020)
 Effort to make sure all comparable features are preserved as part of the refactor.  This includes documentation and release candidates to ensure existing projects can migrate easily including
 * greenwoodjs.io
+* Greenwood Getting Started
 * www.thegreenhouse.io
 * projectevergreen.github.io
 
@@ -23,23 +24,26 @@ Main thing here should be ensure that performance improves significantly and a n
     - markdown
     - others
 1. support images, JSON, HTML? (via `import`?)
-1. 404 handling
-1. [sourcemaps](https://github.com/ProjectEvergreen/greenwood/issues/319)?
+1. App templates
+1. Markdown / Prism support
 1. SPA support
     - how to handle strict / ssg mode
     - Decouple spa specific code from the bundle
-    - Smaller / lighter router? like a <router-outlet></router-outlet>?
+    - [Smaller / lighter router](https://router.matsu.fi/getting-started)? like a <router-outlet></router-outlet>?
+    - [rollup dynamic input vars](https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars)
+1. [GraphQL as a package](https://github.com/ProjectEvergreen/greenwood/issues/278), or [something simpler](https://jaredpalmer.com/gatsby-vs-nextjs)
+    - [data hydration still an issue](https://github.com/ProjectEvergreen/greenwood/issues/349)
+    - [reduce duplicate graphql calls](https://github.com/ProjectEvergreen/greenwood/issues/272)?
+1. [sourcemaps?](https://github.com/ProjectEvergreen/greenwood/issues/319)?
 1. Copying all of _assets/_ ?
 1. CSS filename hashing
 1. Upgrade Puppeteer (5.x)
 1. Babel / PostCSS / Browserslist support
-1. [GraphQL as a package](https://github.com/ProjectEvergreen/greenwood/issues/278), or [something simpler](https://jaredpalmer.com/gatsby-vs-nextjs)
-    - [data hydration still an issue](https://github.com/ProjectEvergreen/greenwood/issues/349)
-    - [reduce duplicate graphql calls](https://github.com/ProjectEvergreen/greenwood/issues/272)?
 1. Questions, refactoring, tech debt, misc, nice to have
     - [figure out why I can't use pages/blog/index.html](https://github.com/ProjectEvergreen/greenwood/issues/120)
     - no need for _.greenwood/_ folder on serialize or for rollup
     - [better lockstepping between serve and rollup for knowing all pages, e.g. use _graph.json_, but still try and keep it async?](https://github.com/ProjectEvergreen/greenwood/issues/327)
+        - https://www.reddit.com/r/node/comments/fidzj9/fdir_the_fastest_directory_crawler_for_nodejs_10k
     - confirm [`body[unresolved]` is still an issue](https://github.com/thescientist13/nono-poc/pull/5#issuecomment-690810774)
     - Own org / decouple website repo from rest of project?
     - bundle from userworkspace or serialized output?
@@ -69,13 +73,15 @@ Main thing here should be ensure that performance improves significantly and a n
     - [unit testing development](https://github.com/ProjectEvergreen/greenwood/issues/47)
     - [prod and develop modes](- [Console / debug logging](https://github.com/ProjectEvergreen/greenwood/issues/199)
     )
+    - [Query Sorting / Filtering](https://github.com/ProjectEvergreen/greenwood/issues/288) - do this server side and inject current page for grapqhl side / slimmer fetching?  do this through the client instead (filter out the "dead pages" at the response level)?
+1. Revisit all documentation
 
 ## Release Candidate and 1.0 (Complete by 11/30/2020)
 Anything that should be completed prior to releasing as 1.0.  This is primarily focused around tech debt and tradeoff's made in advancing the initial, as well as long standing issues in the Greenwood backlog.  Hopefully this can provide a nice clean roadmap for post 1.0 and the the road to 2.0.
 
 1. Node version using `import`, also `(node:82640) ExperimentalWarning: The fs.promises API is experimental`  
 1. CJS vs ESM lookup?  Do some tests
-1. Can be run via `npx`
+1. Can be run via `npx` (0CJS - zero config JS)
 1. Good First Issues / Hacktoberfest
     - Timestamp for docs
     - [Html prettifier / formatter post optimize](https://github.com/ProjectEvergreen/greenwood/issues/318)
@@ -87,6 +93,7 @@ Anything that should be completed prior to releasing as 1.0.  This is primarily 
     - [External Sources](https://github.com/ProjectEvergreen/greenwood/issues/21)
     - [website refresh](https://github.com/ProjectEvergreen/greenwood/issues/325)
     - [home page / project marketing](https://github.com/ProjectEvergreen/greenwood/issues/268)
+1. Re-review Trello board
 1. Better HTML rendering for second case - https://github.com/thegreenhouseio/www.thegreenhouse.io/issues/133
     - No special indentation
     - No restrictions on whitespace
@@ -122,12 +129,13 @@ These are tasks that can be worked on in the normal course of maintaing Greenwoo
     - [one off page templates as JS](https://github.com/ProjectEvergreen/greenwood/issues/170)
     - [linting](https://github.com/ProjectEvergreen/greenwood/issues/106)
     - [Reduce duplicate data fetches](https://github.com/ProjectEvergreen/greenwood/issues/347)
+1. Starter / Boilerplate / Generator (via `npx`)
 1. Pre bundle dependencies for development (a la snowpack)
 1. generate import map as JSON file and import from a <script> tag / path, and only once
 1. Rollup code splitting / grouping by template
 1. preloading / async / defer modules (optimizations)
 1. [Inline JS / CSS](https://developers.google.com/web/tools/puppeteer/articles/ssr)
-1. create a github action for puppeteer support
+1. [create a github action for puppeteer support](https://github.com/ProjectEvergreen/greenwood/pull/335#issuecomment-618044372)
 1. proxy dev server for API calls
 1. HTTP/2 for dev server
 1. Restart graphql on file change? (Query, shelf)
