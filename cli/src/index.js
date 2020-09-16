@@ -11,6 +11,9 @@ console.log(`running command... ${command}`);
 // TODO establish develop vs build modes
 process.env.__GWD__ = command; // eslint-disable-line no-underscore-dangle
 
+// TODO this should non-blocking / run in parallel to other commands
+require('child_process').fork(path.join(__dirname, 'lifecycles', 'graph.js'));
+
 switch (command) {
 
   case 'build':

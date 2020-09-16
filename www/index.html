@@ -5,13 +5,13 @@
     <title>NoNo POC - Home Page</title>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'/>
-    <meta name='description' content='NoNo POC'/>
+    <meta-outlet></meta-outlet>
 
-    <script type="module" src="./components/header.component.js"></script>
-    <script type="module" src="./components/footer.component.js"></script>
-    <script type="module" src="./components/counter.component.js"></script> <!-- note!!!: type=module-shim-->
+    <script type="module" src="/components/header.component.js"></script>
+    <script type="module" src="/components/footer.component.js"></script>
+    <script type="module" src="/components/counter.component.js"></script> <!-- note!!!: type=module-shim-->
 
-    <link rel="stylesheet" href="./styles.css"></link>
+    <link rel="stylesheet" href="/styles.css"></link>
   </head>
 
   <body>
@@ -21,10 +21,16 @@
     </section>
 
     <section>
+      <nav>
+        <ul>
+          <li><a href="/about.html">About Page (about.html)</a></li>
+          <li><a href="/contact.html">Contact Page (contact.md)</a></li>
+          <li><a href="/blog/">Blog Posts (pages/blog/index.html)</a></li>
+        </ul>
+      </nav>
+
       <div class="content">
         <h1>Hello World from the Home Page!</h1>
-
-        <a href="./about.html">Click to visit the About Page</a>
 
         <div class="counter-container">
           <my-counter></my-counter>

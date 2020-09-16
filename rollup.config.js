@@ -15,7 +15,8 @@ function greenwoodWorkspaceResolver () {
   return {
     name: 'greenwood-workspace-resolver', // this name will show up in warnings and errors
     resolveId(source) {
-      if (source.indexOf('./') === 0 && path.extname(source) !== '.html' && fs.existsSync(path.join(workspaceDirectory, source))) {
+      // TODO better way to handle relative paths?  happens in generateBundle too
+      if ((source.indexOf('./') === 0 || source.indexOf('/') === 0) && path.extname(source) !== '.html' && fs.existsSync(path.join(workspaceDirectory, source))) {
         const resolvedPath = source.replace(source, path.join(workspaceDirectory, source));
         console.log('resolve THIS sauce to workspace directory, returning ', resolvedPath);
         
@@ -43,7 +44,7 @@ function greenwoodHtmlPlugin() {
       const that = this;
       const parser = new htmlparser2.Parser({
         onopentag(name, attribs) {
-          if (name === 'script' && attribs.type === 'module') {
+          if (name === 'script' && attribs.type === 'module' && attribs.src) {
             const srcPath = attribs.src;
             const scriptSrc = fs.readFileSync(path.join(workspaceDirectory, srcPath), 'utf-8');
 
@@ -75,21 +76,16 @@ function greenwoodHtmlPlugin() {
 
         // TODO handle (!) Generated empty chunks .greenwood/about, .greenwood/index
         if (bundle.isEntry && path.extname(bundle.facadeModuleId) === '.html') {
-          const namePieces = bundle.fileName.split('.');
-          const name = `${namePieces[1].split('/')[1]}.html`;
           const html = await fsPromises.readFile(bundle.facadeModuleId, 'utf-8');
           let newHtml = html;
-          
-          console.log('tranform entry into HTML file', name);
 
           const parser = new htmlparser2.Parser({
             onopentag(name, attribs) {
-              if (name === 'script' && attribs.type === 'module') {
-                // console.log('hit a script tag!', attribs.src);
+              if (name === 'script' && attribs.type === 'module' && attribs.src) {
                 for (const innerBundleId of Object.keys(bundles)) {
-                  // console.log('facadeId', bundles[innerBundleId].facadeModuleId);
-                  if (bundles[innerBundleId].facadeModuleId.indexOf(attribs.src.replace('.', '')) > 0) {
-                    newHtml = newHtml.replace(attribs.src, innerBundleId);
+                  if (bundles[innerBundleId].facadeModuleId.indexOf(attribs.src.replace('.', '')) > 0 
+                    || bundles[innerBundleId].facadeModuleId.indexOf(attribs.src.replace('/', '')) > 0) {
+                    newHtml = newHtml.replace(attribs.src, `/${innerBundleId}`);
                   }
                 }
               }
@@ -99,7 +95,8 @@ function greenwoodHtmlPlugin() {
           parser.write(html);
           parser.end();
 
-          bundle.fileName = name;
+          // TODO this seems hacky :D
+          bundle.fileName = bundle.facadeModuleId.replace('.greenwood', './public');
           bundle.code = newHtml;
         }
       }
