@@ -108,7 +108,7 @@ Now we will optimize our site even more by pre-rendering it and trying to build 
 
 [Git Tag 0.4.0](https://github.com/thescientist13/nono-poc/releases/tag/0.4.0)
 
-## Extending the Authoring Experience (Markdown!)
+## ✅ Extending the Authoring Experience (Markdown!)
 The "framework stuff"
 
 ### Goals
@@ -130,6 +130,7 @@ The "framework stuff"
 - dedupe content
 - unfified for the graph?
 
+[Git Tag 0.5.0](https://github.com/thescientist13/nono-poc/releases/tag/0.4.0)
 
 ## Profit?
 Let's see if some of the big ticket items are now solved, or easier to work around now
